@@ -1,0 +1,11 @@
+02/26 - Jade
+
+DONE:
+- created project called 'kyusiyasat'
+- created secret key and adjusted settings.py accordingly
+- added templates folder and path in settings.py
+
+TO-DO:
+- add application name in settings.py
+- adjust database name
+- integrate database
