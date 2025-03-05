@@ -9,3 +9,6 @@ TO-DO:
 - add application name in settings.py
 - adjust database name
 - integrate database
+
+03/05 - Jade
+- integrated database
