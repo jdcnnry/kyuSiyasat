@@ -15,7 +15,12 @@
             <h1>KyuSiyasat</h1>
             <ul>
                 <li><a href="{% url 'driver_dashboard' %}" class="active">Dashboard</a></li>
-                <li><a href="{% url 'logout' %}" class="logout-btn">Logout</a></li>
+                <li>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn">Logout</button>
+                    </form>
+                </li>
             </ul>
         </div>
 
