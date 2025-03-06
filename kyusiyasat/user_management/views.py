@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from .forms import UserRegistrationForm
+from .forms import BusSelectionForm, UserRegistrationForm
 from django.contrib.auth.decorators import login_required
 
 def register(request):
@@ -10,16 +10,17 @@ def register(request):
             user = form.save()
             login(request, user)
             if user.profile.user_type == 'driver':
-                return redirect('driver_dashboard')  # Replace with your driver dashboard URL
+                return redirect('user_management:select_bus')  
             else:
-                return redirect('commuter_dashboard')  # Replace with your commuter dashboard URL
+                
+                return redirect('commuter_dashboard')
     else:
         form = UserRegistrationForm()
-    return render(request, 'registration/register.html', {'form': form})
+    return render(request, 'register.html', {'form': form})
 
 @login_required
 def my_profile(request):
-    return render(request, 'registration/my_profile.html', {'user': request.user})
+    return render(request, 'my_profile.html', {'user': request.user})
 
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -28,9 +29,30 @@ from django.contrib.auth.decorators import login_required
 def user_redirect_view(request):
     """Redirect users to the appropriate dashboard after login."""
     if request.user.is_authenticated:
-        if hasattr(request.user, 'is_driver') and request.user.is_driver:
-            return redirect('driver_dashboard')  # Redirect driver users
+        if request.user.profile.user_type == 'driver':
+            if not request.user.profile.bus:
+                return redirect('user_management:select_bus')
+            else:
+                return redirect('driver_dashboard')  
         else:
-            return redirect('user_dashboard')  # Redirect regular users
+            return redirect('commuter_dashboard')
 
-    return redirect('login')  # Default case
+    return redirect('login')
+
+@login_required
+def select_bus(request):
+    if not request.user.profile.user_type == 'driver':
+        return redirect('commuter_dashboard')
+
+    if request.method == 'POST':
+        form = BusSelectionForm(request.POST, user=request.user)
+        if form.is_valid():
+            bus = form.cleaned_data['bus']
+            profile = request.user.profile
+            profile.bus = bus
+            profile.save()
+            return redirect('driver_dashboard') 
+    else:
+        form = BusSelectionForm(user=request.user)
+
+    return render(request, 'registration/select_bus.html', {'form': form})
