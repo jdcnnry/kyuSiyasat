@@ -62,7 +62,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates')
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates', 'homepage'),
+            os.path.join(BASE_DIR, 'templates', 'registration'),
+            os.path.join(BASE_DIR, 'templates', 'driver_dashboard'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -127,6 +130,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+LOGIN_REDIRECT_URL = '/driver/dashboard'
+LOGOUT_REDIRECT_URL = '/accounts/login' 
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),

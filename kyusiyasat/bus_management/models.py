@@ -59,6 +59,9 @@ class BusRoute(models.Model):
         managed = False
         db_table = 'bus_route'
 
+    def __str__(self):
+        return f"{self.bus} - {self.route}"
+
 
 class Route(models.Model):
     route_id = models.CharField(primary_key=True, max_length=5)
@@ -96,3 +99,6 @@ class StationAssignment(models.Model):
         managed = False
         db_table = 'station_assignment'
         unique_together = (('route', 'station'),)
+
+    def __str__(self):
+        return f"[{self.station_order}] {self.route} - {self.station}"
