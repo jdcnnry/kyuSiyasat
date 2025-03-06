@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>My Profile</h2>
+<p><strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+<p><strong>Username:</strong> {{ user.username }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+<p><strong>User Type:</strong> {{ user.profile.user_type }}</p>
+
+<a href="{% url 'driver_dashboard' %}">Back to Dashboard</a>
+{% endblock %}
