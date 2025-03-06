@@ -1,30 +1,42 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}KyuSiyasat{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
 <body>
-    <header>
-        <a href = "{% url 'home' %}"><h1>KyuSiyasat</h1></a>
-        <nav>
-            <ul>
-                {% block user_authentication %}
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h1>KyuSiyasat</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>  
+                    
                     {% if user.is_authenticated %}
-                        <form action="{% url 'logout' %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit">Logout</button>
-                        </form>
+                        <li>
+                            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="logout-btn">
+                                    Logout
+                                </button>
+                            </form>
+                        </li>
                     {% else %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
                     {% endif %}
-                {% endblock %}
-            </ul>
-        </nav>
-    </header>
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
 </body>
 </html>

@@ -4,14 +4,14 @@
 <h2>Driver Dashboard</h2>
 <p>Welcome, {{ user.username }}!</p>
 
-<!-- Button to Create Bus Log -->
-<a href="{% url 'create_bus_log' %}">
-    <button>Create Bus Log</button>
-</a>
+<div class="button-container">
+    <a href="{% url 'create_bus_log' %}">
+        <button>Create Bus Log</button>
+    </a>
+    <a href="{% url 'update_bus_status' %}">
+        <button>Update Bus Status</button>
+    </a>
+</div>
 
-<!-- Button to Update Bus Status -->
-<a href="{% url 'update_bus_status' %}">
-    <button>Update Bus Status</button>
-</a>
 
 {% endblock %}
