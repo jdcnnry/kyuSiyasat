@@ -1,3 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from .forms import UserRegistrationForm
 
-# Create your views here.
+def register(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            if user.profile.user_type == 'driver':
+                return redirect('driver_dashboard')  # Replace with your driver dashboard URL
+            else:
+                return redirect('commuter_dashboard')  # Replace with your commuter dashboard URL
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'registration/register.html', {'form': form})
