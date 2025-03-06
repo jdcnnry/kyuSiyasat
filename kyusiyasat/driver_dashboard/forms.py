@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.timezone import now
-from bus_management.models import BusLog, StationAssignment, BusRoute
+from bus_management.models import BusLog, StationAssignment, BusRoute, Bus
 import uuid
 
 
@@ -51,3 +51,11 @@ class BusLogForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+    
+class BusStatusForm(forms.ModelForm):
+    class Meta:
+        model = Bus
+        fields = ['status']
+        widgets = {
+            'status': forms.Select(choices=Bus.STATUS_CHOICES, attrs={'class': 'form-control'})
+        }
