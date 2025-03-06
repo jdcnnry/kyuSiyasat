@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+
+from bus_management.models import Bus
 from .models import Profile
 
 class UserRegistrationForm(UserCreationForm):
@@ -28,3 +30,16 @@ class UserRegistrationForm(UserCreationForm):
             user_profile = Profile.objects.create(user=user, user_type=self.cleaned_data['user_type'])
             user_profile.save()
         return user
+    
+class BusSelectionForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        assigned_buses = Profile.objects.exclude(bus__isnull=True).values_list('bus', flat=True)
+        available_buses = Bus.objects.filter(status='Operating').exclude(bus_id__in=assigned_buses)
+
+        self.fields['bus'] = forms.ModelChoiceField(
+                queryset=available_buses,
+                label="Select Your Bus"
+            )
