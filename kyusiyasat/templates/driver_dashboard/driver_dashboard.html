@@ -2,5 +2,9 @@
 
 {% block content %}
 <h2>Driver Dashboard</h2>
-<p>Welcome to the driver dashboard.</p>
+<p>Welcome, {{ user.username }}!</p>
+
+<a href="{% url 'create_bus_log' %}">
+    <button>Create Bus Log</button>
+</a>
 {% endblock %}
