@@ -9,9 +9,11 @@
     </form>
 
     <form method="POST">
-        <a href="{% url 'user_management:register' %}">
-            <button type="button" class="btn">Sign Up!</button>
-         </a>
-        <p id="subtext">No account yet?</p>
+        <p id="subtext">No account yet? 
+            <a href="{% url 'user_management:register' %}">
+                <button type="button" class="btn">Sign Up!</button>
+            </a>
+        </p>
+        
     </form>
 {% endblock %}

@@ -5,32 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}KyuSiyasat{% endblock %}</title>
 </head>
+
 <body>
     <header>
-        <h1>KyuSiyasat</h1>
+        <a href = "{% url 'home' %}"><h1>KyuSiyasat</h1></a>
         <nav>
             <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>  <!-- ✅ Use named URL patterns -->
-
-                {% if user.is_authenticated %}
-                    <li>
-                        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% block user_authentication %}
+                    {% if user.is_authenticated %}
+                        <form action="{% url 'logout' %}" method="POST">
                             {% csrf_token %}
-                            <button type="submit" style="background: none; border: none; color: blue; cursor: pointer;">
-                                Logout
-                            </button>
+                            <button type="submit">Logout</button>
                         </form>
-                    </li>
-                {% else %}
-                    <li><a href="{% url 'login' %}">Login</a></li>  <!-- ✅ Use Django auth login URL -->
-                {% endif %}
+                    {% else %}
+                    {% endif %}
+                {% endblock %}
             </ul>
         </nav>
     </header>
-    
     <main>
         {% block content %}{% endblock %}
     </main>
-
 </body>
 </html>
