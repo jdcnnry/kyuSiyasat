@@ -21,7 +21,7 @@ class Bus(models.Model):
     capacity = models.IntegerField()
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'bus'
 
     def __str__(self):
@@ -56,7 +56,7 @@ class BusRoute(models.Model):
     route = models.ForeignKey('Route', models.DO_NOTHING)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'bus_route'
 
 
@@ -67,7 +67,7 @@ class Route(models.Model):
     end_station = models.ForeignKey('Station', models.DO_NOTHING, related_name='route_end_station_set')
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'route'
 
     def __str__(self):
@@ -79,7 +79,7 @@ class Station(models.Model):
     station_name = models.CharField(max_length=255)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'station'
 
     def __str__(self):
@@ -93,6 +93,6 @@ class StationAssignment(models.Model):
     distance_to_next = models.FloatField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'station_assignment'
         unique_together = (('route', 'station'),)
