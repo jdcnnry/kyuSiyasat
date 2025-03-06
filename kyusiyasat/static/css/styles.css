@@ -8,8 +8,8 @@ body {
 
 /* Main container */
 .container {
-    max-width: 800px; 
-    margin: 30px auto; 
+    max-width: 800px;
+    margin: 30px auto;
     padding: 15px;
 }
 
@@ -17,16 +17,13 @@ body {
 form {
     display: flex;
     flex-direction: column;
-    gap: 0px;
 }
 
-/* Labels */
 label {
     font-weight: bold;
     color: #333;
 }
 
-/* Inputs and Selects */
 input, select {
     width: 100%;
     padding: 10px;
@@ -35,22 +32,27 @@ input, select {
     font-size: 16px;
 }
 
-/* Button */
-button {
-    background-color: #007bff;
+button, .confirm-btn {
+    background-color: #1177c1;
     color: white;
-    padding: 20px;
+    padding: 10px;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
 }
 
-button:hover {
+button:hover, .confirm-btn:hover, .sidebar ul li a:hover, .logout-btn:hover {
     background-color: #0056b3;
 }
 
-/* Dashboard Layout */
+/* Layout Styling */
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f5f7fa;
+}
+
 .dashboard-container {
     display: flex;
     gap: 20px;
@@ -59,10 +61,17 @@ button:hover {
 /* Sidebar */
 .sidebar {
     width: 250px;
-    background: white;
+    background: #f9fafb;
+    color: white;
     padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #b1b1b1; /* Gray text */
 }
 
 .sidebar ul {
@@ -71,33 +80,39 @@ button:hover {
 }
 
 .sidebar ul li {
-    padding: 15px;
-    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 10px; /* Reduce padding to bring items closer */
 }
 
-.sidebar ul li a {
+.sidebar ul li a, .logout-btn {
+    display: block;
+    color: #b1b1b1; /* Gray text */
+    background: none;
     text-decoration: none;
+    padding: 10px;
     font-weight: bold;
-    color: #333;
+    text-align: left;
+    width: 100%;
+    border: none;
+    cursor: pointer;
 }
-
-/* Active sidebar item */
-.sidebar ul li.active {
-    background-color: #007bff;
-}
-
-.sidebar ul li.active a {
-    color: white;
+.sidebar ul li a:hover, .logout-btn:hover {
+    background-color: #1177c1;
+    border-radius: 5px;
 }
 
 /* Main content */
 .main-content {
-    flex: 1;
+    flex-grow: 1;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+
 .main-content h2 {
-    margin-top: 0px; 
-    margin-bottom: 10px; 
+    margin: 10px 0;
 }
 
 /* Dashboard Cards */
@@ -117,7 +132,6 @@ button:hover {
     font-weight: bold;
 }
 
-/* Icons inside cards */
 .card-icon {
     width: 40px;
     height: 40px;
@@ -128,127 +142,31 @@ button:hover {
     justify-content: center;
 }
 
-/* Confirm Button inside Cards */
-.confirm-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    font-size: 14
-}
-
-/* Layout Styling */
-.wrapper {
-    display: flex;
-    min-height: 100vh;
-    background-color: #f8f9fa;
-}
-
-.sidebar {
-    width: 250px;
-    background: #2c3e50;
-    color: white;
-    padding: 20px;
-    height: 100vh;
-}
-
-.sidebar a {
-    color: white;
-    display: block;
-    text-decoration: none;
-    padding: 10px 0;
-}
-
-.main-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10 px;
-}
-
-/* Form Styling */
+/* Form Container */
 .form-container {
     background: white;
     padding: 25px;
-    border-radius: px;
+    border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 500px;
 }
 
-/* Sidebar Styling */
-.sidebar {
-    width: 250px;
-    background: #2c3e50;
-    color: white;
-    padding: 20px;
-    height: 100vh;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar ul li {
-    margin-bottom: 5px;
-    padding: 10px; /* Reduce padding to bring items closer */
-}
-
-.sidebar ul li a, .logout-btn {
-    display: block;
-    color: white;
-    background: none;
-    text-decoration: none;
-    padding: 10px;
-    font-weight: bold;
-    text-align: left;
-    width: 100%;
-    border: none;
-    cursor: pointer;
-}
-
-.sidebar ul li a:hover, .logout-btn:hover {
-    background-color: #007bff;
-    border-radius: 5px;
-}
-
-/* Wrapper for layout */
-.wrapper {
-    display: flex;
-    min-height: 100vh;
-}
-
-/* Main Content */
-.main-content {
-    flex-grow: 1;
-    padding: 20px;
-}
-
 .form-container input[type="number"] {
-    width: 96%; 
+    width: 96%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
+/* Button Container */
 .button-container {
     display: flex;
     gap: 10px;
-    flex-wrap: nowrap; 
+    flex-wrap: nowrap;
 }
 
-.button-container a, 
-.button-container button {
-    flex: 1; 
+.button-container a, .button-container button {
+    flex: 1;
     white-space: nowrap;
 }
