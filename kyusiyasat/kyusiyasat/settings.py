@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'driver_dashboard',
     'user_management',
+    'bus_management',
 ]
 
 MIDDLEWARE = [
