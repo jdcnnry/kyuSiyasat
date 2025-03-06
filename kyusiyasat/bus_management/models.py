@@ -13,6 +13,10 @@ from django.utils.timezone import now
 class Bus(models.Model):
     bus_id = models.CharField(primary_key=True, max_length=5)
     bus_plate = models.CharField(max_length=255)
+    STATUS_CHOICES = [
+        ('Operating', 'Operating'),
+        ('Not Operating', 'Not Operating'),
+    ]
     status = models.CharField(max_length=255)
     capacity = models.IntegerField()
 
@@ -21,7 +25,7 @@ class Bus(models.Model):
         db_table = 'bus'
 
     def __str__(self):
-        return f"{self.bus_plate}"
+        return f"{self.bus_plate} - {self.status}"
 
 
 class BusLog(models.Model):
