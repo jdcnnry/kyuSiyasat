@@ -1,0 +1,172 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main container */
+.container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 15px;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    color: #333;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button, .confirm-btn {
+    background-color: #1177c1;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover, .confirm-btn:hover, .sidebar ul li a:hover, .logout-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Layout Styling */
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f5f7fa;
+}
+
+.dashboard-container {
+    display: flex;
+    gap: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #f9fafb;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #b1b1b1; /* Gray text */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 5px;
+    padding: 10px; /* Reduce padding to bring items closer */
+}
+
+.sidebar ul li a, .logout-btn {
+    display: block;
+    color: #b1b1b1; /* Gray text */
+    background: none;
+    text-decoration: none;
+    padding: 10px;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+}
+.sidebar ul li a:hover, .logout-btn:hover {
+    background-color: #1177c1;
+    border-radius: 5px;
+}
+
+/* Main content */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content h2 {
+    margin: 10px 0;
+}
+
+/* Dashboard Cards */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Form Container */
+.form-container {
+    background: white;
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+}
+
+.form-container input[type="number"] {
+    width: 96%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+.button-container a, .button-container button {
+    flex: 1;
+    white-space: nowrap;
+}
