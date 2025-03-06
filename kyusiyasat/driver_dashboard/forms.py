@@ -11,6 +11,20 @@ class BusLogForm(forms.ModelForm):
         model = BusLog
         fields = ['bus', 'route', 'from_station', 'to_station', 'traffic_condition', 'passenger_count']
 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)  # Extract the user argument
+        super().__init__(*args, **kwargs)
+
+        # Filter the bus field to show only the bus assigned to the logged-in driver
+        if self.user and hasattr(self.user, 'profile'):
+            profile = self.user.profile
+            if profile.user_type == 'driver' and profile.bus:
+                self.fields['bus'].queryset = Bus.objects.filter(bus_id=profile.bus.bus_id)
+            else:
+                self.fields['bus'].queryset = Bus.objects.none()  # Show no buses if the user is not a driver or has no bus assigned
+        else:
+            self.fields['bus'].queryset = Bus.objects.none()
+
     def clean(self):
         cleaned_data = super().clean()
         bus = cleaned_data.get("bus")
@@ -59,3 +73,4 @@ class BusStatusForm(forms.ModelForm):
         widgets = {
             'status': forms.Select(choices=Bus.STATUS_CHOICES, attrs={'class': 'form-control'})
         }
+
