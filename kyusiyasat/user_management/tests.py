@@ -7,6 +7,7 @@ from .forms import UserRegistrationForm
 
 class ProfileModelTest(TestCase):
     def setUp(self):
+        # Set up data for the whole TestCase
         self.user_driver = User.objects.create_user(username='driver_user', password='testpassword')
         self.user_commuter = User.objects.create_user(username='commuter_user', password='testpassword')
         self.profile_driver = Profile.objects.create(user=self.user_driver, user_type='driver')

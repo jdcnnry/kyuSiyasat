@@ -6,6 +6,7 @@ import uuid
 
 class BusModelTest(TestCase):
     def setUp(self):
+        # Set up data for the whole TestCase
         self.bus = Bus.objects.create(
             bus_id="B0001",
             bus_plate="ABC-123",
@@ -26,6 +27,7 @@ class BusModelTest(TestCase):
 
 class StationModelTest(TestCase):
     def setUp(self):
+        # Set up data for the whole TestCase
         self.station = Station.objects.create(
             station_id="S0001",
             station_name="Quezon City Hall Gate 3 Kalayaan Ave."
@@ -42,6 +44,7 @@ class StationModelTest(TestCase):
 
 class RouteModelTest(TestCase):
     def setUp(self):
+        # Set up data for the whole TestCase
         self.start_station = Station.objects.create(station_id="S0001", station_name="Quezon City Hall Gate 3 Kalayaan Ave.")
         self.end_station = Station.objects.create(station_id="S0002", station_name="Kalayaan Avenue cor. Masigla St.")
 
@@ -65,6 +68,7 @@ class RouteModelTest(TestCase):
 
 class BusLogModelTest(TestCase):
     def setUp(self):
+        # Set up data for the whole TestCase
         self.bus = Bus.objects.create(bus_id="B0002", bus_plate="XYZ-789", status="Not Operating", capacity=50)
         self.start_station = Station.objects.create(station_id="S0001", station_name="Quezon City Hall Gate 3 Kalayaan Ave.")
         self.end_station = Station.objects.create(station_id="S0002", station_name="Kalayaan Avenue cor. Masigla St.")
