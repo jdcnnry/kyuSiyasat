@@ -66,11 +66,24 @@ class BusLogForm(forms.ModelForm):
             instance.save()
         return instance
     
+# class BusStatusForm(forms.ModelForm):
+#     class Meta:
+#         model = Bus
+#         fields = ['status']
+#         widgets = {
+#             'status': forms.Select(choices=Bus.STATUS_CHOICES, attrs={'class': 'form-control'})
+#         }
+
 class BusStatusForm(forms.ModelForm):
+    bus_id = forms.ModelChoiceField(
+        queryset=Bus.objects.all(),  # Fetch all buses
+        widget=forms.Select(attrs={'class': 'form-control'}),  # Use dropdown
+        empty_label="Select a Bus"
+    )
+
     class Meta:
         model = Bus
-        fields = ['status']
+        fields = ['bus_id', 'status']  # Ensure bus_id and status are included
         widgets = {
             'status': forms.Select(choices=Bus.STATUS_CHOICES, attrs={'class': 'form-control'})
         }
-

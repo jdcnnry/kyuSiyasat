@@ -21,7 +21,7 @@ class Bus(models.Model):
     capacity = models.IntegerField()
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'bus'
 
     def __str__(self):
@@ -56,7 +56,7 @@ class BusRoute(models.Model):
     route = models.ForeignKey('Route', models.DO_NOTHING)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'bus_route'
 
     def __str__(self):
@@ -70,7 +70,7 @@ class Route(models.Model):
     end_station = models.ForeignKey('Station', models.DO_NOTHING, related_name='route_end_station_set')
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'route'
 
     def __str__(self):
@@ -82,7 +82,7 @@ class Station(models.Model):
     station_name = models.CharField(max_length=255)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'station'
 
     def __str__(self):
@@ -90,15 +90,16 @@ class Station(models.Model):
 
 
 class StationAssignment(models.Model):
-    route = models.OneToOneField(Route, models.DO_NOTHING, primary_key=True)  # The composite primary key (route_id, station_id) found, that is not supported. The first column is selected.
-    station = models.ForeignKey(Station, models.DO_NOTHING)
+    station_assignment_id = models.CharField(max_length=5, primary_key=True)  # Unique primary key
+    route = models.ForeignKey(Route, on_delete=models.RESTRICT)
+    station = models.ForeignKey(Station, on_delete=models.RESTRICT)
     station_order = models.IntegerField()
-    distance_to_next = models.FloatField(blank=True, null=True)
+    distance_to_next = models.FloatField(null=True, blank=True)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'station_assignment'
-        unique_together = (('route', 'station'),)
+        unique_together = ('route', 'station_order')  # Ensures no duplicate station order per route
 
     def __str__(self):
         return f"[{self.station_order}] {self.route} - {self.station}"

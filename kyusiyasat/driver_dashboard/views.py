@@ -29,12 +29,14 @@ def update_bus_status(request):
         return redirect('driver_dashboard')
 
     if request.method == 'POST':
-        form = BusStatusForm(request.POST, instance=bus)
+        form = BusStatusForm(request.POST)  # Bind form with POST data
         if form.is_valid():
             form.save()
             return redirect('driver_dashboard')
     else:
-        form = BusStatusForm(instance=bus)
+        form = BusStatusForm()
+
 
     return render(request, 'update_bus_status.html', {'form': form})
+
 
