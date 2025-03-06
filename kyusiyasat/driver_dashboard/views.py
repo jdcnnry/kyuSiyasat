@@ -21,19 +21,34 @@ def create_bus_log(request):
 
     return render(request, 'driver_dashboard/create_bus_log.html', {'form': form})
 
-@login_required
+# @login_required
+# def update_bus_status(request):
+#     bus = Bus.objects.filter(bus_plate=request.user.username).first()  # Adjust based on your user-bus relationship
+
+#     if not bus:
+#         return redirect('driver_dashboard')  # Redirect if no bus is found
+
+#     if request.method == 'POST':
+#         form = BusStatusForm(request.POST, instance=bus)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('driver_dashboard')  # Redirect after updating status
+#     else:
+#         form = BusStatusForm(instance=bus)
+
+#     return render(request, 'driver_dashboard/update_bus_status.html', {'form': form})
+
 def update_bus_status(request):
-    bus = Bus.objects.filter(bus_plate=request.user.username).first()  # Adjust based on your user-bus relationship
-
-    if not bus:
-        return redirect('driver_dashboard')  # Redirect if no bus is found
-
     if request.method == 'POST':
-        form = BusStatusForm(request.POST, instance=bus)
+        form = BusStatusForm(request.POST)  # Bind form with POST data
         if form.is_valid():
-            form.save()
-            return redirect('driver_dashboard')  # Redirect after updating status
+            bus = form.cleaned_data['bus_id']  # Get selected bus instance
+            bus.status = form.cleaned_data['status']  # Update status
+            bus.save()
+            return redirect('driver_dashboard')  # Redirect to a success page
     else:
-        form = BusStatusForm(instance=bus)
+        form = BusStatusForm()
 
     return render(request, 'driver_dashboard/update_bus_status.html', {'form': form})
+
+

@@ -57,18 +57,18 @@ class DriverDashboardTests(TestCase):
         self.assertEqual(response.status_code, 302)  # Redirect expected
         self.assertEqual(BusLog.objects.count(), 1)
 
-    # def test_update_bus_status_view_get(self):
-    #     response = self.client.get(reverse('update_bus_status'))
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'driver_dashboard/update_bus_status.html')
+    def test_update_bus_status_view_get(self):
+        response = self.client.get(reverse('update_bus_status'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'driver_dashboard/update_bus_status.html')
 
-    # def test_update_bus_status_view_post(self):
-    #     response = self.client.post(reverse('update_bus_status'), {
-    #         'status': 'Not Operating',
-    #     })
-    #     self.assertEqual(response.status_code, 302)
-    #     self.bus.refresh_from_db()
-    #     self.assertEqual(self.bus.status, 'Not Operating')
+    def test_update_bus_status_view_post(self):
+        response = self.client.post(reverse('update_bus_status'), {
+            'status': 'Not Operating',
+        })
+        self.assertEqual(response.status_code, 302)
+        self.bus.refresh_from_db()
+        self.assertEqual(self.bus.status, 'Not Operating')
 
     def test_redirect_if_not_logged_in(self):
         self.client.logout()

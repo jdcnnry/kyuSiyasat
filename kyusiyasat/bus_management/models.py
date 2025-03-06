@@ -103,6 +103,3 @@ class StationAssignment(models.Model):
 
     def __str__(self):
         return f"[{self.station_order}] {self.route} - {self.station}"
-
-    def __str__(self):
-        return f"{self.station_assignment_id}: {self.route.route_id} - {self.station.station_id}"
