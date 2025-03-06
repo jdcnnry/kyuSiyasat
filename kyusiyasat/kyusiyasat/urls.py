@@ -23,6 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomePageView.as_view(), name='home'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('user_management/', include('user_management.urls', namespace='user_management')),
+    path('user/', include('user_management.urls', namespace='user_management')),
     path('driver/', include('driver_dashboard.urls')),
 ]
