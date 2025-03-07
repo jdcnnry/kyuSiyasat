@@ -6,10 +6,10 @@ from bus_management.models import Bus
 from .models import Profile
 
 class UserRegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True, label="Your Email Address")
+    email = forms.EmailField(required=True, label="Email")
     first_name = forms.CharField(required=True, label="First Name")
     last_name = forms.CharField(required=True, label="Last Name")
-    user_type = forms.ChoiceField(choices=Profile.USER_TYPE_CHOICES, widget=forms.Select, label="Are you a Driver or a Commuter?")
+    user_type = forms.ChoiceField(choices=Profile.USER_TYPE_CHOICES, widget=forms.Select, label="Role")
 
     class Meta:
         model = User
@@ -20,6 +20,7 @@ class UserRegistrationForm(UserCreationForm):
         self.fields['username'].help_text = None
         self.fields['password1'].help_text = None
         self.fields['password2'].help_text = None
+        self.fields['password2'].label = "Confirm Password"
 
     def save(self, commit=True):
         user = super().save(commit=False)
