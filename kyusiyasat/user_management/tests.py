@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from .models import Profile
+from bus_management.models import Bus
 from .forms import UserRegistrationForm
 
 
@@ -92,4 +93,13 @@ class UserRegistrationTest(TestCase):
             'password2': 'Testpassword123!',
             'user_type': 'driver',
         })
-        self.assertRedirects(response, reverse('driver_dashboard'))
+        self.assertRedirects(response, reverse('user_management:select_bus'))  
+
+        driver_user = User.objects.get(username='driveruser')
+        bus = Bus.objects.create(bus_id='B002', bus_plate='XYZ-456', status='Operating', capacity=50)
+        Profile.objects.filter(user=driver_user).update(bus=bus)
+
+        self.client.login(username='driveruser', password='Testpassword123!')
+        response = self.client.get(reverse('driver_dashboard'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'driver_dashboard.html')
