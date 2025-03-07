@@ -50,6 +50,9 @@ class BusLog(models.Model):
     class Meta:
         db_table = 'bus_log'
 
+    def __str__(self):
+        return f"{self.log_id} - {self.bus}"
+
 
 class BusRoute(models.Model):
     bus = models.OneToOneField(Bus, models.DO_NOTHING, primary_key=True)
