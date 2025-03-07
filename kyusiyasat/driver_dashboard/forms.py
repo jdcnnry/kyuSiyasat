@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.timezone import now
-from bus_management.models import BusLog, StationAssignment, BusRoute, Bus
+from bus_management.models import BusLog, Station, StationAssignment, BusRoute, Bus
 import uuid
 
 
@@ -18,8 +18,15 @@ class BusLogForm(forms.ModelForm):
         # Filter the bus field to show only the bus assigned to the logged-in driver
         if self.user and hasattr(self.user, 'profile'):
             profile = self.user.profile
+            bus_route = BusRoute.objects.get(bus=profile.bus)
+            stations = StationAssignment.objects.filter(route=bus_route.route).values_list('station', flat=True)
             if profile.user_type == 'driver' and profile.bus:
-                self.fields['bus'].queryset = Bus.objects.filter(bus_id=profile.bus.bus_id)
+                self.fields['bus'].initial = profile.bus
+                self.fields['bus'].disabled = True
+                self.fields['route'].initial = bus_route.route
+                self.fields['route'].disabled = True
+                self.fields['from_station'].queryset = Station.objects.filter(station_id__in=stations)
+                self.fields['to_station'].queryset = Station.objects.filter(station_id__in=stations)
             else:
                 self.fields['bus'].queryset = Bus.objects.none()  # Show no buses if the user is not a driver or has no bus assigned
         else:
@@ -66,13 +73,6 @@ class BusLogForm(forms.ModelForm):
             instance.save()
         return instance
     
-# class BusStatusForm(forms.ModelForm):
-#     class Meta:
-#         model = Bus
-#         fields = ['status']
-#         widgets = {
-#             'status': forms.Select(choices=Bus.STATUS_CHOICES, attrs={'class': 'form-control'})
-#         }
 
 class BusStatusForm(forms.ModelForm):
     bus_id = forms.ModelChoiceField(

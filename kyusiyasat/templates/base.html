@@ -15,9 +15,9 @@
             <h1>KyuSiyasat</h1>
             <nav>
                 <ul>
-                    <li><a href="{% url 'driver_dashboard' %}">Dashboard</a></li>  
-                    
                     {% if user.is_authenticated %}
+                        <li><a href="{% url 'driver_dashboard' %}">Dashboard</a></li>  
+                        <li><a href="{% url 'user_management:my_profile' %}">My Profile</a></li>
                         <li>
                             <form action="{% url 'logout' %}" method="post" style="display: inline;">
                                 {% csrf_token %}
@@ -26,8 +26,6 @@
                                 </button>
                             </form>
                         </li>
-                    {% else %}
-                        <li><a href="{% url 'login' %}">Login</a></li>
                     {% endif %}
                 </ul>
             </nav>

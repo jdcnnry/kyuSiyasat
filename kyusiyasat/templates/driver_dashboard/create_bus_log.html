@@ -1,39 +1,11 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Bus Log</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
+{% extends "base.html" %}
 
-    <div class="wrapper">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <h1>KyuSiyasat</h1>
-            <ul>
-                <li><a href="{% url 'driver_dashboard' %}" class="active">Dashboard</a></li>
-                <li>
-                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="logout-btn">Logout</button>
-                    </form>
-                </li>
-            </ul>
-        </div>
+{% block content %}
+<h2>Create Bus Log</h2>
+    <form method="post" class="form-container">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="button-container"><button type="submit">Submit</button></div>
+    </form>
+{% endblock %}
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <h2>Create Bus Log</h2>
-            <form method="post" class="form-container">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-    </div>
-
-</body>
-</html>
