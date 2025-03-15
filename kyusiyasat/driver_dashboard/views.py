@@ -24,7 +24,7 @@ def create_bus_log(request):
 
 @login_required
 def update_bus_status(request):
-    bus = Bus.objects.filter(bus_plate=request.user.profile.bus.bus_plate)
+    bus = Bus.objects.filter(bus_plate=request.user.profile.bus.bus_plate).first()
 
     if not bus:
         print("No bus assigned to your account.")
