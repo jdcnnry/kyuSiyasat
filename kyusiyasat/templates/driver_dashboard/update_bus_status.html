@@ -2,7 +2,8 @@
 
 {% block content %}
 <h2>Update Bus Status</h2>
-Bus: {{ user.profile.bus.bus_plate }} Driver: {{ user}}
+<p>Bus: {{ user.profile.bus }}</p>
+<p>Driver: {{ user }}</p>
 <form method="POST">
   {% csrf_token %} {{ form.as_p }}
   <button type="submit" class="btn btn-success">Update</button>
