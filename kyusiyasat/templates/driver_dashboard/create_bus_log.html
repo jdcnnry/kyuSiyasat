@@ -1,11 +1,10 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 
 {% block content %}
 <h2>Create Bus Log</h2>
-    <form method="post" class="form-container">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <div class="button-container"><button type="submit">Submit</button></div>
-    </form>
+<form method="post" class="form-container">
+  {% csrf_token %} {{ form.as_p }}
+  <div class="button-container"><button type="submit">Submit</button></div>
+</form>
 {% endblock %}
 

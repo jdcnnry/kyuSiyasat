@@ -1,17 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
 
 {% block content %}
 <h2>Driver Dashboard</h2>
 <p>Welcome, {{ user.username }}!</p>
 
 <div class="button-container">
-    <a href="{% url 'create_bus_log' %}">
-        <button>Create Bus Log</button>
-    </a>
-    <!-- TO DO -->
-    <!-- <a href="{% url 'update_bus_status' %}">
-        <button style="visibility: hidden;">Update Bus Status</button> 
-    </a> -->
+  <a href="{% url 'create_bus_log' %}">
+    <button>Create Bus Log</button>
+  </a>
+  <a href="{% url 'update_bus_status' %}">
+    <button>Update Bus Status</button>
+  </a>
 </div>
 
 
