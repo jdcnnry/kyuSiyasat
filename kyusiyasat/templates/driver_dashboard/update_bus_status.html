@@ -1,12 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
 
 {% block content %}
-  <h2>Update Bus Status</h2>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Update</button>
-  </form>
-  <br>
-  <a href="{% url 'driver_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+<h2>Update Bus Status</h2>
+<p>Bus: {{ user.profile.bus }}</p>
+<p>Driver: {{ user }}</p>
+<form method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="btn btn-success">Update</button>
+</form>
+<br />
+<a href="{% url 'driver_dashboard' %}" class="btn btn-secondary"
+  >Back to Dashboard</a
+>
 {% endblock %}
