@@ -16,7 +16,7 @@ def create_bus_log(request):
         form = BusLogForm(request.POST, user=request.user)
         if form.is_valid():
             form.save()
-            return redirect('driver_dashboard')
+            messages.success(request, "Bus log created successfully.") 
     else:
         form = BusLogForm(user=request.user)
 
@@ -33,7 +33,6 @@ def update_bus_status(request):
             messages.success(request, "Bus status updated successfully.")
             return redirect('update_bus_status') 
 
-    # Fetch the latest bus status
     bus.refresh_from_db()
     form = BusStatusForm(instance=bus)
 
