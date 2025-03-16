@@ -26,19 +26,15 @@ def create_bus_log(request):
 def update_bus_status(request):
     bus = Bus.objects.filter(bus_plate=request.user.profile.bus.bus_plate).first()
 
-    if not bus:
-        print("No bus assigned to your account.")
-        return redirect('driver_dashboard')
-
     if request.method == 'POST':
-        form = BusStatusForm(request.POST, instance=bus)  # Bind form with POST data
+        form = BusStatusForm(request.POST, instance=bus)
         if form.is_valid():
             form.save()
-            print("Bus status updated successfully.")
-            return redirect('driver_dashboard')
-    else:
-        form = BusStatusForm()
+            messages.success(request, "Bus status updated successfully.")
+            return redirect('update_bus_status') 
+
+    # Fetch the latest bus status
+    bus.refresh_from_db()
+    form = BusStatusForm(instance=bus)
 
     return render(request, 'update_bus_status.html', {'form': form})
-
-
