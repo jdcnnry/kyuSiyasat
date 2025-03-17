@@ -1,7 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from bus_management.models import Bus, BusRoute, Route, BusLog, Station
 from user_management.models import Profile
+from django.contrib.auth.decorators import login_required
+from user_management.decorators import user_type_required
 
+
+@login_required
+@user_type_required('commuter')
 def commuter_dashboard(request):
     buses = Bus.objects.all().select_related('busroute__route')
 
@@ -29,6 +34,8 @@ def commuter_dashboard(request):
         'route_filter': route_filter
     })
 
+@login_required
+@user_type_required('commuter')
 def bus_detail(request, bus_id):
     bus = get_object_or_404(Bus.objects.select_related('busroute__route'), pk=bus_id)
 

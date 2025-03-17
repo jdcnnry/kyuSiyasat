@@ -5,8 +5,10 @@ from django.contrib import messages
 from bus_management.models import Bus
 from .forms import BusLogForm, BusStatusForm
 from django.contrib.auth.decorators import login_required
+from user_management.decorators import user_type_required
 
 @login_required
+@user_type_required('driver')
 def driver_dashboard(request):
     return render(request, 'driver_dashboard.html', {'user': request.user})
 
@@ -23,6 +25,7 @@ def create_bus_log(request):
     return render(request, 'create_bus_log.html', {'form': form})
 
 @login_required
+@user_type_required('driver')
 def update_bus_status(request):
     bus = Bus.objects.filter(bus_plate=request.user.profile.bus.bus_plate).first()
 
