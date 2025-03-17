@@ -1,7 +1,43 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
-<h2>Commuter Dashboard</h2>
-<p>Welcome, {{ user.username }}!</p>
+    <h1>Commuter Dashboard - Bus List</h1>
 
+    <!-- Filter Form -->
+    <form method="GET" action="" class="filter-form">
+        <label for="status">Status:</label>
+        <select name="status" id="status">
+            <option value="">All</option>
+            <option value="Operating" {% if status_filter == "Operating" %}selected{% endif %}>Operating</option>
+            <option value="Not Operating" {% if status_filter == "Not Operating" %}selected{% endif %}>Not Operating</option>
+        </select>
+
+        <label for="route">Route:</label>
+        <select name="route" id="route">
+            <option value="">All</option>
+            {% for route in routes %}
+                <option value="{{ route.route_id }}" {% if route_filter|stringformat:"s" == route.route_id|stringformat:"s" %}selected{% endif %}>
+                    {{ route.route_name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Filter</button>
+    </form>
+
+    <!-- Bus Grid -->
+    <div class="bus-grid">
+        {% for bus in buses %}
+            <a href="{% url 'bus_detail' bus.bus_id %}" class="bus-card-link">
+                <div class="bus-card">
+                    <h2>BUS {{ bus.bus_id }}</h2>
+                    <p><strong>Driver:</strong> {{ bus.driver_name }}</p>
+                    <p><strong>Route:</strong> {{ bus.busroute.route.route_name|default:"No Assigned Route" }}</p>
+                    <p><strong>Plate:</strong> {{ bus.bus_plate }}</p>
+                </div>
+            </a>
+        {% empty %}
+            <p>No buses found.</p>
+        {% endfor %}
+    </div>
 {% endblock %}

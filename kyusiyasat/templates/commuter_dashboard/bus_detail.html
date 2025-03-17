@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Bus Details</h1>
+    <div class="bus-card">
+        <p><strong>Driver:</strong> {{ driver }}</p>
+        <p><strong>Route:</strong> {{ route }}</p>
+        <p><strong>Plate Number:</strong> {{ plate_number }}</p>
+        <p><strong>Estimated Time of Arrival:</strong> {{ eta }}</p>
+        <p><strong>Time Departed:</strong> {{ time_departed }}</p>
+        <p><strong>Previous Station:</strong> {{ previous_station }}</p>
+        <p><strong>Passengers:</strong> {{ passengers }}</p>
+        <p><strong>Traffic Condition:</strong> {{ traffic_condition }}</p>
+        <p><strong>Availability:</strong> {{ availability }}</p>
+    </div>
+
+    <!-- Back to Dashboard Button -->
+    <div class="button-container">
+        <a href="{% url 'commuter_dashboard' %}" class="btn">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}
