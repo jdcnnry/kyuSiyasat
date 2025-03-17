@@ -24,5 +24,6 @@ urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('user/', include('user_management.urls', namespace='user_management')),
+    path('commuter/', include('commuter_dashboard.urls')),
     path('driver/', include('driver_dashboard.urls')),
 ]

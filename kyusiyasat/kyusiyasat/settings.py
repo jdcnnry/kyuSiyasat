@@ -66,6 +66,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'templates', 'homepage'),
             os.path.join(BASE_DIR, 'templates', 'registration'),
             os.path.join(BASE_DIR, 'templates', 'driver_dashboard'),
+            os.path.join(BASE_DIR, 'templates', 'commuter_dashboard'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -119,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Manila'
 
 USE_I18N = True
 
@@ -134,7 +135,9 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-LOGIN_REDIRECT_URL = '/driver/dashboard'
+from django.urls import reverse_lazy
+
+LOGIN_REDIRECT_URL = reverse_lazy('user_management:user_redirect_view')
 LOGOUT_REDIRECT_URL = '/accounts/login' 
 
 STATICFILES_DIRS = [
