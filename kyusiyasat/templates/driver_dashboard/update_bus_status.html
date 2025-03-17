@@ -1,15 +1,27 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
 <h2>Update Bus Status</h2>
 <p>Bus: {{ user.profile.bus }}</p>
 <p>Driver: {{ user }}</p>
+
 <form method="POST">
-  {% csrf_token %} {{ form.as_p }}
+  {% csrf_token %} 
+  {{ form.as_p }}
   <button type="submit" class="btn btn-success">Update</button>
 </form>
-<br />
-<a href="{% url 'driver_dashboard' %}" class="btn btn-secondary"
-  >Back to Dashboard</a
->
+
+<br/>
+<a href="{% url 'driver_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+
+<br/>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
 {% endblock %}
