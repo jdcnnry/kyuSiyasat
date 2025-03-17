@@ -1,30 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Commuter Dashboard - Bus List</h1>
+    <h1>Welcome, {{ user.username }}!</h1>
 
     <!-- Filter Form -->
     <form method="GET" action="" class="filter-form">
-        <label for="status">Status:</label>
-        <select name="status" id="status">
-            <option value="">All</option>
-            <option value="Operating" {% if status_filter == "Operating" %}selected{% endif %}>Operating</option>
-            <option value="Not Operating" {% if status_filter == "Not Operating" %}selected{% endif %}>Not Operating</option>
-        </select>
+        <div class="filter-container">
+            <div class="filter-item">
+                <label for="status">Status:</label>
+                <select name="status" id="status">
+                    <option value="">All</option>
+                    <option value="Operating" {% if status_filter == "Operating" %}selected{% endif %}>Operating</option>
+                    <option value="Not Operating" {% if status_filter == "Not Operating" %}selected{% endif %}>Not Operating</option>
+                </select>
+            </div>
+        
+            <div class="filter-item">
+                <label for="route">Route:</label>
+                <select name="route" id="route">
+                    <option value="">All</option>
+                    {% for route in routes %}
+                        <option value="{{ route.route_id }}" {% if route_filter|stringformat:"s" == route.route_id|stringformat:"s" %}selected{% endif %}>
+                            {{ route.route_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
 
-        <label for="route">Route:</label>
-        <select name="route" id="route">
-            <option value="">All</option>
-            {% for route in routes %}
-                <option value="{{ route.route_id }}" {% if route_filter|stringformat:"s" == route.route_id|stringformat:"s" %}selected{% endif %}>
-                    {{ route.route_name }}
-                </option>
-            {% endfor %}
-        </select>
-
-        <button type="submit">Filter</button>
+            <button type="submit" class="filter-button">Filter</button>
+        </div>
     </form>
-
+        
     <!-- Bus Grid -->
     <div class="bus-grid">
         {% for bus in buses %}
