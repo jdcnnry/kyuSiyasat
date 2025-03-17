@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <h1>Bus Details</h1>
-    <div class="bus-card">
+    <div class="bus-detail">
         <p><strong>Driver:</strong> {{ driver }}</p>
         <p><strong>Route:</strong> {{ route }}</p>
         <p><strong>Plate Number:</strong> {{ plate_number }}</p>
@@ -14,10 +14,9 @@
         <p><strong>Traffic Condition:</strong> {{ traffic_condition }}</p>
         <p><strong>Availability:</strong> {{ availability }}</p>
     </div>
-
-    <!-- Back to Dashboard Button -->
-    <div class="button-container">
-        <a href="{% url 'commuter_dashboard' %}" class="btn">Back to Dashboard</a>
-    </div>
 </div>
+
+<br/>
+<a href="{% url 'commuter_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+<br/>
 {% endblock %}

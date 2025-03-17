@@ -1,4 +1,4 @@
-/* General styles */
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f6fa;
@@ -6,11 +6,11 @@ body {
     padding: 0;
 }
 
-/* Main container */
+/* Main Container */
 .container {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 15px;
+    max-width: 600px; 
+    margin: 30px auto; 
+    text-align: center;
 }
 
 /* Form Styling */
@@ -46,6 +46,24 @@ button:hover, .confirm-btn:hover, .sidebar ul li a:hover, .logout-btn:hover {
     background-color: #0056b3;
 }
 
+/* Button Styling */
+a.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #1177c1;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+}
+
+a.btn:hover {
+    background-color: #0056b3;
+}
+
 /* Layout Styling */
 .wrapper {
     display: flex;
@@ -58,20 +76,23 @@ button:hover, .confirm-btn:hover, .sidebar ul li a:hover, .logout-btn:hover {
     gap: 20px;
 }
 
-/* Sidebar */
 .sidebar {
     width: 250px;
     background: #f9fafb;
     color: white;
     padding: 20px;
     height: 100vh;
+    min-height: 100%; 
+    position: fixed; 
+    left: 0;
+    overflow-y: auto;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar h1 {
     font-size: 24px;
     margin-bottom: 20px;
-    color: #b1b1b1; /* Gray text */
+    color: #b1b1b1;
 }
 
 .sidebar ul {
@@ -81,12 +102,12 @@ button:hover, .confirm-btn:hover, .sidebar ul li a:hover, .logout-btn:hover {
 
 .sidebar ul li {
     margin-bottom: 5px;
-    padding: 10px; /* Reduce padding to bring items closer */
+    padding: 10px;
 }
 
 .sidebar ul li a, .logout-btn {
     display: block;
-    color: #b1b1b1; /* Gray text */
+    color: #b1b1b1;
     background: none;
     text-decoration: none;
     padding: 10px;
@@ -96,12 +117,24 @@ button:hover, .confirm-btn:hover, .sidebar ul li a:hover, .logout-btn:hover {
     border: none;
     cursor: pointer;
 }
+
 .sidebar ul li a:hover, .logout-btn:hover {
     background-color: #1177c1;
     border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8); /* Soft glow effect */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
-/* Main content */
+.sidebar ul li a.active {
+    background-color: #0056b3;
+    color: white; 
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Main Content */
 .main-content {
     flex-grow: 1;
     padding: 20px;
@@ -109,6 +142,9 @@ button:hover, .confirm-btn:hover, .sidebar ul li a:hover, .logout-btn:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-left: 280px;
+    width: calc(100% - 250px);
+    transition: margin-left 0.3s ease-in-out;
 }
 
 .main-content h2 {
@@ -171,19 +207,54 @@ button:hover, .confirm-btn:hover, .sidebar ul li a:hover, .logout-btn:hover {
     white-space: nowrap;
 }
 
+/* Bus Grid */
 .bus-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     padding: 20px;
+    justify-content: center;
+    align-items: start;
 }
 
+.bus-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    cursor: pointer;
+}
+
+/* Bus Details */
+.bus-detail {
+    background: #F8FAFC;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: left;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Bus Cards */
 .bus-card {
     background: #F8FAFC;
     border-radius: 10px;
     padding: 15px;
     text-align: center;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.bus-card:hover {
+    transform: scale(1.05); 
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+    background-color:#b1b1b1;
+}
+
+/* Remove Default Anchor Tag Styles */
+.bus-card-link:visited,
+.bus-card-link:active {
+    text-decoration: none;
+    color: inherit;
 }
 
 .bus-card h2 {
@@ -194,4 +265,21 @@ button:hover, .confirm-btn:hover, .sidebar ul li a:hover, .logout-btn:hover {
 .bus-card p {
     color: #475569;
     font-size: 1em;
+}
+
+.filter-container {
+    display: flex;
+    gap: 20px; /* Space between filters */
+    align-items: center;
+    justify-content: center; /* Center align filters */
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    width: 150px; /* Ensures dropdowns have equal width */
+}
+
+button {
+    margin-top: 10px;
 }
