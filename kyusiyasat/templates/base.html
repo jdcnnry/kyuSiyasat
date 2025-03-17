@@ -16,14 +16,32 @@
             <nav>
                 <ul>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'driver_dashboard' %}">Dashboard</a></li>  
-                        <li><a href="{% url 'user_management:my_profile' %}">My Profile</a></li>
+                        {% if user.profile.user_type == "driver" %}
+                            <li>
+                                <a href="{% url 'driver_dashboard' %}" 
+                                   class="{% if request.resolver_match.url_name == 'driver_dashboard' %}active{% endif %}">
+                                    Dashboard
+                                </a>
+                            </li>
+                        {% elif user.profile.user_type == "commuter" %}
+                            <li>
+                                <a href="{% url 'commuter_dashboard' %}" 
+                                   class="{% if request.resolver_match.url_name == 'commuter_dashboard' %}active{% endif %}">
+                                    Dashboard
+                                </a>
+                            </li>
+                        {% endif %}
+                 
                         <li>
-                            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                            <a href="{% url 'user_management:my_profile' %}" 
+                               class="{% if request.resolver_match.url_name == 'my_profile' %}active{% endif %}">
+                                My Profile
+                            </a>
+                        </li>
+                        <li>
+                            <form action="{% url 'logout' %}" method="post">
                                 {% csrf_token %}
-                                <button type="submit" class="logout-btn">
-                                    Logout
-                                </button>
+                                <button type="submit" class="logout-btn">Logout</button>
                             </form>
                         </li>
                     {% endif %}
