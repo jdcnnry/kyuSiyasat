@@ -34,7 +34,7 @@ class BusLog(models.Model):
     route = models.ForeignKey('Route', models.DO_NOTHING)
     from_station = models.ForeignKey('Station', models.DO_NOTHING)
     to_station = models.ForeignKey('Station', models.DO_NOTHING, related_name='buslog_to_station_set')
-    arrival_time = models.DateTimeField(default=now, editable=False)
+    arrival_time = models.DateTimeField(default=now, editable=False) # Placeholder value for arrival_time until ETA feature arrives
     time_departed = models.DateTimeField(default=now, editable=False)
 
     TRAFFIC_CONDITIONS = [
