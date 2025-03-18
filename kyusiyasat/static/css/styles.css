@@ -284,3 +284,19 @@ button {
     margin-top: 10px;
 }
 
+.bus-card.inactive {
+    background-color: #C0392B; /* Red for Not Operating */
+    color: #F8EDEB; /* Softer white */
+    box-shadow: 4px 4px 15px rgba(255, 0, 0, 0.2);
+}
+
+.bus-card.inactive h2,
+.bus-card.inactive p,
+.bus-card.inactive strong {
+    color: #F8EDEB; /* Apply the off-white color to all text */
+}
+
+.bus-card.inactive:hover {
+    background-color: #b03d3b; /* Darker Red on Hover */
+}
+
