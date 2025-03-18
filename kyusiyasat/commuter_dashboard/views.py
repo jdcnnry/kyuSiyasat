@@ -31,7 +31,7 @@ def commuter_dashboard(request):
         'buses': buses,
         'routes': routes,
         'status_filter': status_filter,
-        'route_filter': route_filter
+        'route_filter': route_filter,
     })
 
 @login_required
