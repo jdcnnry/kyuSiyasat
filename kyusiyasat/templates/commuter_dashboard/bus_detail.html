@@ -8,17 +8,17 @@
     <p><strong>Estimated Time of Arrival:</strong> {{ eta }}</p>
     <p><strong>Time Departed:</strong> {{ time_departed }}</p>
     <p><strong>Previous Station:</strong> {{ previous_station }}</p>
+    <p><strong>Next Station:</strong> {{ next_station }}</p>
     <p><strong>Passengers:</strong> {{ passengers }}</p>
     <p><strong>Traffic Condition:</strong> {{ traffic_condition }}</p>
-    <p>
-      <strong>Availability:</strong> {{ availability }} {{ previous_url }} = is
-      prev url
-    </p>
+    <p><strong>Availability:</strong> {{ availability }}</p>
   </div>
 </div>
 
 <br />
-<a href=" {{request.META.HTTP_REFERER}} " class="btn btn-secondary"
+<a
+  href=" {% if request.GET.urlencode %}{% url 'commuter_dashboard' %}?{{ request.GET.urlencode }}{% else %}{% url 'commuter_dashboard' %}{% endif %}"
+  class="btn btn-secondary"
   >Back to Dashboard</a
 >
 <br />

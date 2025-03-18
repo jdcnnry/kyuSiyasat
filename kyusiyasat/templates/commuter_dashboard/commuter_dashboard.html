@@ -34,7 +34,7 @@
     <!-- Bus Grid -->
     <div class="bus-grid">
         {% for bus in buses %}
-            <a href="{% url 'bus_detail' bus.bus_id %}" class="bus-card-link">
+            <a href="{% url 'bus_detail' bus.bus_id %}?{{ request.GET.urlencode }}" class="bus-card-link">
                 <div class="bus-card">
                     <h2>BUS {{ bus.bus_id }}</h2>
                     <p><strong>Driver:</strong> {{ bus.driver_name }}</p>
