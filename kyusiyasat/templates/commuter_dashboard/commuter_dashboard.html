@@ -34,14 +34,22 @@
     <!-- Bus Grid -->
     <div class="bus-grid">
         {% for bus in buses %}
-            <a href="{% url 'bus_detail' bus.bus_id %}" class="bus-card-link">
-                <div class="bus-card">
-                    <h2>BUS {{ bus.bus_id }}</h2>
-                    <p><strong>Driver:</strong> {{ bus.driver_name }}</p>
-                    <p><strong>Route:</strong> {{ bus.busroute.route.route_name|default:"No Assigned Route" }}</p>
-                    <p><strong>Plate:</strong> {{ bus.bus_plate }}</p>
+            {% if bus.status == 'Not Operating' %}
+                <div class="bus-card inactive" data-url="{% url 'commuter_dashboard' %}" onclick="redirectToDashboard(this);">
+            {% else %}
+                <a href="{% url 'bus_detail' bus.bus_id %}" class="bus-card-link">
+                    <div class="bus-card">
+            {% endif %}
+                        <h2>BUS {{ bus.bus_id }}</h2>
+                        <p><strong>Driver:</strong> {{ bus.driver_name }}</p>
+                        <p><strong>Route:</strong> {{ bus.busroute.route.route_name|default:"No Assigned Route" }}</p>
+                        <p><strong>Plate:</strong> {{ bus.bus_plate }}</p>
+            {% if bus.status == 'Not Operating' %}
                 </div>
-            </a>
+            {% else %}
+                    </div>
+                </a>
+            {% endif %}
         {% empty %}
             <p>No buses found.</p>
         {% endfor %}
