@@ -35,7 +35,7 @@
     <div class="bus-grid">
         {% for bus in buses %}
             <a href="{% url 'bus_detail' bus.bus_id %}" class="bus-card-link">
-                <div class="bus-card">
+                <div class="bus-card {% if bus.status == 'Not Operating' %}inactive{% endif %}">
                     <h2>BUS {{ bus.bus_id }}</h2>
                     <p><strong>Driver:</strong> {{ bus.driver_name }}</p>
                     <p><strong>Route:</strong> {{ bus.busroute.route.route_name|default:"No Assigned Route" }}</p>
