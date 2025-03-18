@@ -266,7 +266,7 @@ a.btn:hover {
     color: #475569;
     font-size: 1em;
 }
-
+    
 .filter-container {
     display: flex;
     gap: 20px; /* Space between filters */
@@ -283,3 +283,4 @@ a.btn:hover {
 button {
     margin-top: 10px;
 }
+

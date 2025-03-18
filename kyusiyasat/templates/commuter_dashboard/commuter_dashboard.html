@@ -28,8 +28,16 @@
             </div>
 
             <button type="submit" class="filter-button">Filter</button>
+            <button type="button" style="background-color: red;" onclick="resetFilters()">Reset Filter</button>
+            </button>
         </div>
     </form>
+
+    <script>
+        function resetFilters() {
+            window.location.href = "{% url 'commuter_dashboard' %}";
+        }
+    </script>
         
     <!-- Bus Grid -->
     <div class="bus-grid">
