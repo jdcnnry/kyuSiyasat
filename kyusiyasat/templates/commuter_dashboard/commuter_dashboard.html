@@ -39,9 +39,10 @@
         }
     </script>
         
-    <!-- Bus Grid -->
+<!-- Bus Grid -->
 <div class="bus-grid">
     {% for bus in buses %}
+      {% if bus.driver_name != "TBA" %}
         {% if bus.status == 'Not Operating' %}
             <div class="bus-card inactive" data-url="{% url 'commuter_dashboard' %}" onclick="redirectToDashboard(this);">
         {% else %}
@@ -66,9 +67,11 @@
         {% else %}
                 </div>
             </a>
+            {% endif %}
         {% endif %}
     {% empty %}
         <p>No buses found.</p>
     {% endfor %}
 </div>
+
 {% endblock %}

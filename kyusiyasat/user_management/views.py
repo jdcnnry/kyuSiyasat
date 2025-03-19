@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from .forms import BusSelectionForm, UserRegistrationForm
+from .forms import BusSelectionForm, UserRegistrationForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 
 def register(request):
@@ -56,3 +56,15 @@ def select_bus(request):
         form = BusSelectionForm(user=request.user)
 
     return render(request, 'registration/select_bus.html', {'form': form})
+
+def update_profile(request):
+    profile = request.user.profile
+    if request.method == "POST":
+        form = ProfileUpdateForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('user_management:my_profile') 
+    else:
+        form = ProfileUpdateForm(instance=profile)
+
+    return render(request, 'update_profile.html', {'form': form})
