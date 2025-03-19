@@ -26,4 +26,5 @@ urlpatterns = [
     path('user/', include('user_management.urls', namespace='user_management')),
     path('commuter/', include('commuter_dashboard.urls')),
     path('driver/', include('driver_dashboard.urls')),
+    path('pages/', include("pages.urls")),
 ]
