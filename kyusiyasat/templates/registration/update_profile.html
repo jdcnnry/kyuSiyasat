@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Edit Profile</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.first_name.id_for_label }}">First Name</label>
+            {{ form.first_name }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+            {{ form.last_name }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Email</label>
+            {{ form.email }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.user_type.id_for_label }}">Role</label>
+            <input type="text" class="form-control" value="{{ user.profile.get_user_type_display }}" disabled>
+        </div>
+        <div class="form-group">
+            <label>Password:</label>
+            <input type="password" value="********" class="form-control" disabled>
+
+            <!-- TO DO: -->
+            <!-- <small><a href="{% url 'password_change' %}">Change Password</a></small> -->
+
+        </div>
+    </br>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </br>
+        <a href="{% url 'user_management:my_profile' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -8,10 +8,17 @@
             <p><strong>Full Name:</strong> {{ user.get_full_name }}</p>
             <p><strong>Username:</strong> {{ user.username }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Role:</strong> {{ user.profile.user_type }}</p>
+            <p><strong>Role:</strong> {{ user.profile.get_user_type_display }}</p>
         </div>
     </div>
 </div>
+
+<div class="button-container">
+    <a href="{% url 'user_management:update_profile' %}">
+        <button>Edit Profile</button>
+    </a>
+</div>
+
 <div class="button-container">
     <a href="{% url 'driver_dashboard' %}">
         <button>Back to Dashboard</button>
