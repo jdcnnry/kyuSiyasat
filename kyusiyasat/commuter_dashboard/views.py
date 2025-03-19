@@ -31,7 +31,7 @@ def commuter_dashboard(request):
         'buses': buses,
         'routes': routes,
         'status_filter': status_filter,
-        'route_filter': route_filter
+        'route_filter': route_filter,
     })
 
 @login_required
@@ -54,6 +54,7 @@ def bus_detail(request, bus_id):
         'eta': "TBA",
         'time_departed': latest_log.time_departed if latest_log else "TBA",
         'previous_station': latest_log.from_station.station_name if latest_log else "TBA",
+        'next_station': latest_log.to_station.station_name if latest_log else "TBA",
         'passengers': latest_log.passenger_count if latest_log else "TBA",
         'traffic_condition': latest_log.traffic_condition if latest_log else "TBA",
         'availability': "Available" if bus.status == "Operating" else "Not Available"

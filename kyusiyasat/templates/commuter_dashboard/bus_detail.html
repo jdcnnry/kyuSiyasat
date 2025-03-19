@@ -1,22 +1,25 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <div class="container">
-    <h1>Bus Details</h1>
-    <div class="bus-detail">
-        <p><strong>Driver:</strong> {{ driver }}</p>
-        <p><strong>Route:</strong> {{ route }}</p>
-        <p><strong>Plate Number:</strong> {{ plate_number }}</p>
-        <p><strong>Estimated Time of Arrival:</strong> {{ eta }}</p>
-        <p><strong>Time Departed:</strong> {{ time_departed }}</p>
-        <p><strong>Previous Station:</strong> {{ previous_station }}</p>
-        <p><strong>Passengers:</strong> {{ passengers }}</p>
-        <p><strong>Traffic Condition:</strong> {{ traffic_condition }}</p>
-        <p><strong>Availability:</strong> {{ availability }}</p>
-    </div>
+  <h1>Bus Details</h1>
+  <div class="bus-detail">
+    <p><strong>Driver:</strong> {{ driver }}</p>
+    <p><strong>Route:</strong> {{ route }}</p>
+    <p><strong>Plate Number:</strong> {{ plate_number }}</p>
+    <p><strong>Estimated Time of Arrival:</strong> {{ eta }}</p>
+    <p><strong>Time Departed:</strong> {{ time_departed }}</p>
+    <p><strong>Previous Station:</strong> {{ previous_station }}</p>
+    <p><strong>Next Station:</strong> {{ next_station }}</p>
+    <p><strong>Passengers:</strong> {{ passengers }}</p>
+    <p><strong>Traffic Condition:</strong> {{ traffic_condition }}</p>
+    <p><strong>Availability:</strong> {{ availability }}</p>
+  </div>
 </div>
 
-<br/>
-<a href="{% url 'commuter_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
-<br/>
+<br />
+<a
+  href=" {% if request.GET.urlencode %}{% url 'commuter_dashboard' %}?{{ request.GET.urlencode }}{% else %}{% url 'commuter_dashboard' %}{% endif %}"
+  class="btn btn-secondary"
+  >Back to Dashboard</a
+>
+<br />
 {% endblock %}
