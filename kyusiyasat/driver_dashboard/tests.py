@@ -3,6 +3,8 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from bus_management.models import Bus, BusLog, Route, Station, BusRoute, StationAssignment
 from user_management.models import Profile
+from django.utils import timezone
+
 
 class DriverDashboardTests(TestCase):
     def setUp(self):
@@ -57,31 +59,29 @@ class DriverDashboardTests(TestCase):
         self.assertTemplateUsed(response, 'create_bus_log.html')
 
     def test_create_bus_log_view_post(self):
-        # Tests if submitting a valid bus log form successfully creates a new BusLog entry and redirects.
+        # Tests if submitting a valid bus log form successfully creates a new BusLog entry.
+        self.client.login(username='testdriver', password='testpass')
+
         response = self.client.post(reverse('create_bus_log'), {
             'bus': self.bus.pk,
-            'route': self.route.pk,  # Adjust based on available routes
+            'route': self.route.pk,
             'from_station': self.station_two.pk,
             'to_station': self.station_three.pk,
-            'arrival_time': '2025-03-06 10:00:00',
-            'time_departed': '2025-03-06 09:30:00',
+            'arrival_time': timezone.now(),
+            'time_departed': timezone.now(),
             'traffic_condition': 'Light',
             'passenger_count': 10,
         })
 
-        if response.status_code == 200:
-            print("Form errors:", response.context['form'].errors)
-        self.assertEqual(response.status_code, 302)  # Redirect expected
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(BusLog.objects.count(), 1)
 
-    # FAILS test_update_bus_status_view_get
     def test_update_bus_status_view_get(self):
         # Tests if the "Update Bus Status" page loads successfully and renders the correct template.
         response = self.client.get(reverse('update_bus_status'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'driver_dashboard/update_bus_status.html')
+        self.assertTemplateUsed(response, 'update_bus_status.html')
 
-    # FAILS test_update_bus_status_view_post
     def test_update_bus_status_view_post(self):
         # Tests if a driver can successfully update a bus's status
         response = self.client.post(reverse('update_bus_status'), {
