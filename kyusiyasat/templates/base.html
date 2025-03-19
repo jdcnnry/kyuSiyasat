@@ -38,6 +38,31 @@
                                 My Profile
                             </a>
                         </li>
+                        
+                        <!-- Getting Started Link -->
+                        <li>
+                            {% if user.profile.user_type == "driver" %}
+                                <a href="{% url 'pages:getting_started_driver' %}" 
+                                   class="{% if request.resolver_match.url_name == 'getting_started_driver' %}active{% endif %}">
+                                    Getting Started
+                                </a>
+                            {% elif user.profile.user_type == "commuter" %}
+                                <a href="{% url 'pages:getting_started_commuter' %}" 
+                                   class="{% if request.resolver_match.url_name == 'getting_started_commuter' %}active{% endif %}">
+                                    Getting Started
+                                </a>
+                            {% endif %}
+                        </li>
+
+                        <!-- Routes Page Link -->
+                        <li>
+                            <a href="{% url 'pages:routes' %}" 
+                               class="{% if request.resolver_match.url_name == 'routes' %}active{% endif %}">
+                                Routes
+                            </a>
+                        </li>
+
+                        <!-- Logout -->
                         <li>
                             <form action="{% url 'logout' %}" method="post">
                                 {% csrf_token %}
