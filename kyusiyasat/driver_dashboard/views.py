@@ -18,7 +18,8 @@ def create_bus_log(request):
         form = BusLogForm(request.POST, user=request.user)
         if form.is_valid():
             form.save()
-            messages.success(request, "Bus log created successfully.") 
+            messages.success(request, "Bus log created successfully.")
+            return redirect('create_bus_log')
     else:
         form = BusLogForm(user=request.user)
 
