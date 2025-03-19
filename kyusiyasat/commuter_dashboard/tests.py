@@ -52,7 +52,7 @@ class CommuterDashboardTests(TestCase):
         self.client.login(username='testcommuter', password='testpass')
     
     def test_commuter_dashboard_view(self):
-        # Tests if the commuter dashboard page loads correctly and uses the correct template.
+        # Tests that the commuter dashboard page loads correctly and uses the correct template.
         response = self.client.get(reverse('commuter_dashboard'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'commuter_dashboard.html')
