@@ -39,6 +39,24 @@ class ProfileModelTest(TestCase):
 
 
 class UserRegistrationTest(TestCase):
+    def setUp(self):
+        # Set up data for the whole TestCase
+        self.user_driver = User.objects.create_user(
+            username="driver_user",
+            password="Testpassword123!"
+        )
+
+    def test_deactivated_user_cannot_login(self):
+        # Test that a deactivated user cannot log in.
+        self.user_driver.is_active = False
+        self.user_driver.save()
+
+        response = self.client.post(reverse('login'), {
+            'username': 'driver_user',
+            'password': 'Testpassword123!'
+        })
+        self.assertContains(response, "Please enter a correct username and password. Note that both fields may be case-sensitive.")
+
     def test_user_registration_form_valid(self):
         # Test that the registration form is valid with correct data.
         form_data = {
@@ -99,7 +117,36 @@ class UserRegistrationTest(TestCase):
         bus = Bus.objects.create(bus_id='B002', bus_plate='XYZ-456', status='Operating', capacity=50)
         Profile.objects.filter(user=driver_user).update(bus=bus)
 
+        self.assertTrue(User.objects.filter(username='driveruser').exists())
         self.client.login(username='driveruser', password='Testpassword123!')
         response = self.client.get(reverse('driver_dashboard'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'driver_dashboard.html')
+
+    def test_register_commuter_redirects_to_commuter_dashboard(self):
+        # Test that registering as a commuter redirects to the commuter dashboard.
+        response = self.client.post(reverse('user_management:register'), {
+            'username': 'commuteruser',
+            'first_name': 'Commuter',
+            'last_name': 'User',
+            'email': 'commuter@example.com',
+            'password1': 'Testpassword123!',
+            'password2': 'Testpassword123!',
+            'user_type': 'commuter',
+        })
+        self.assertRedirects(response, reverse('commuter_dashboard'))  
+
+        self.assertTrue(User.objects.filter(username='commuteruser').exists())
+        self.client.login(username='commuteruser', password='Testpassword123!')
+        response = self.client.get(reverse('commuter_dashboard'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'commuter_dashboard.html')
+
+    def test_invalid_login(self):
+        # Test that an invalid login attempt does not redirect
+        response = self.client.post(reverse('login'), {
+            'username': 'wronguser',
+            'password': 'wrongpassword',
+        })
+        self.assertEqual(response.status_code, 200)  # Should not redirect
+        self.assertContains(response, "Please enter a correct username and password. Note that both fields may be case-sensitive.")  # Check for error message
