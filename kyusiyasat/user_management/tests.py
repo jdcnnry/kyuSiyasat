@@ -38,6 +38,7 @@ class ProfileModelTest(TestCase):
         self.assertIn(self.profile_driver.user_type, valid_choices)
         self.assertIn(self.profile_commuter.user_type, valid_choices)
 
+
 class UpdateProfileTest(TestCase):
     def setUp(self):
         # Set up data for the whole TestCase

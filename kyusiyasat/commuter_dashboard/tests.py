@@ -1,6 +1,5 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from django.contrib.auth import get_user_model
 from user_management.models import Profile, User
 from bus_management.models import Bus, Route, BusRoute, BusLog, Station, StationAssignment
 from django.utils import timezone
