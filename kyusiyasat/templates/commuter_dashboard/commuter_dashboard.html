@@ -40,26 +40,35 @@
     </script>
         
     <!-- Bus Grid -->
-    <div class="bus-grid">
-        {% for bus in buses %}
-            {% if bus.status == 'Not Operating' %}
-                <div class="bus-card inactive" data-url="{% url 'commuter_dashboard' %}" onclick="redirectToDashboard(this);">
-            {% else %}
-                <a href="{% url 'bus_detail' bus.bus_id %}?{{ request.GET.urlencode }}" class="bus-card-link">
-                    <div class="bus-card">
-            {% endif %}
-                        <h2>BUS {{ bus.bus_id }}</h2>
-                        <p><strong>Driver:</strong> {{ bus.driver_name }}</p>
-                        <p><strong>Route:</strong> {{ bus.busroute.route.route_name|default:"No Assigned Route" }}</p>
-                        <p><strong>Plate:</strong> {{ bus.bus_plate }}</p>
-            {% if bus.status == 'Not Operating' %}
+<div class="bus-grid">
+    {% for bus in buses %}
+        {% if bus.status == 'Not Operating' %}
+            <div class="bus-card inactive" data-url="{% url 'commuter_dashboard' %}" onclick="redirectToDashboard(this);">
+        {% else %}
+            <a href="{% url 'bus_detail' bus.bus_id %}?{{ request.GET.urlencode }}" class="bus-card-link">
+                <div class="bus-card">
+        {% endif %}
+                    <h2>BUS {{ bus.bus_id }}</h2>
+                    <p><strong>Driver:</strong> {{ bus.driver_name }}</p>
+                    <p><strong>Route:</strong> {{ bus.busroute.route.route_name|default:"No Assigned Route" }}</p>
+                    <p><strong>Plate:</strong> {{ bus.bus_plate }}</p>
+
+                    {% with bus_log=bus.buslog_set.last %} 
+                        {% if bus_log %}
+                            <p><strong>Going to:</strong> {{ bus_log.to_station.station_name }}</p>
+                        {% else %}
+                            <p><strong>Going to:</strong> No assigned destination</p>
+                        {% endif %}
+                    {% endwith %}
+                    
+        {% if bus.status == 'Not Operating' %}
+            </div>
+        {% else %}
                 </div>
-            {% else %}
-                    </div>
-                </a>
-            {% endif %}
-        {% empty %}
-            <p>No buses found.</p>
-        {% endfor %}
-    </div>
+            </a>
+        {% endif %}
+    {% empty %}
+        <p>No buses found.</p>
+    {% endfor %}
+</div>
 {% endblock %}
