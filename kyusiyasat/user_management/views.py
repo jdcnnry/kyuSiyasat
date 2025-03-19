@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from .forms import BusSelectionForm, UserRegistrationForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
+from .decorators import user_type_required
 
 def register(request):
     if request.method == 'POST':
@@ -40,6 +41,7 @@ def user_redirect_view(request):
     return redirect('login')
 
 @login_required
+@user_type_required('driver')
 def select_bus(request):
     if not request.user.profile.user_type == 'driver':
         return redirect('commuter_dashboard')
@@ -57,6 +59,7 @@ def select_bus(request):
 
     return render(request, 'registration/select_bus.html', {'form': form})
 
+@login_required
 def update_profile(request):
     profile = request.user.profile
     if request.method == "POST":
