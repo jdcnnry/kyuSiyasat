@@ -44,3 +44,45 @@ class BusSelectionForm(forms.Form):
                 queryset=available_buses,
                 label="Select Your Bus"
             )
+        
+class ProfileUpdateForm(forms.ModelForm):
+    first_name = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    last_name = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={'class': 'form-control'})
+    )
+    user_type = forms.CharField(
+        disabled=True,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    class Meta:
+        model = Profile
+        fields = ['first_name', 'last_name', 'email', 'user_type']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].initial = self.instance.user.first_name
+        self.fields['last_name'].initial = self.instance.user.last_name
+        self.fields['email'].initial = self.instance.user.email
+        self.fields['user_type'].initial = self.instance.get_user_type_display()
+
+    def save(self, commit=True):
+        profile = super().save(commit=False)
+        user = profile.user
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
+
+        if commit:
+            user.save()
+            profile.save()
+
+        return profile
