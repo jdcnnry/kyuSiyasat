@@ -23,8 +23,8 @@ class ProfileModelTest(TestCase):
 
     def test_profile_str_representation(self):
         # Test the string representation of the Profile model.
-        self.assertEqual(str(self.profile_driver), 'driver_user - driver')
-        self.assertEqual(str(self.profile_commuter), 'commuter_user - commuter')
+        self.assertEqual(str(self.profile_driver), 'driver_user - Driver')
+        self.assertEqual(str(self.profile_commuter), 'commuter_user - Commuter')
 
     def test_user_profile_relation(self):
         # Test that the one-to-one relationship is working correctly.
