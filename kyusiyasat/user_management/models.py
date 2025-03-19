@@ -17,5 +17,9 @@ class Profile(models.Model):
             raise ValidationError("Only drivers can be assigned a bus.")
         super().save(*args, **kwargs)
 
+    def get_user_type_display(self):
+        """Return properly formatted user type from choices."""
+        return dict(self.USER_TYPE_CHOICES).get(self.user_type, self.user_type)
+
     def __str__(self):
-        return f"{self.user.username} - {self.user_type}"
+        return f"{self.user.username} - {self.get_user_type_display()}"

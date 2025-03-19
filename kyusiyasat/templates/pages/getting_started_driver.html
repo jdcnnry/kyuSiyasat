@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Welcome, Driver!</h2>
+    <p>Here’s how to get started as a driver:</p>
+<!-- TO DO -->
+</div>
+
+<div class="button-container">
+    <a href="{% url 'pages:routes' %}">
+        <button>View Routes</button>
+    </a>
+</div>
+
+<div class="button-container">
+    <a href="{% url 'driver_dashboard' %}">
+        <button>Back to Dashboard</button>
+    </a>
+</div>
+{% endblock %}

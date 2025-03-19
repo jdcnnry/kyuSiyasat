@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'driver_dashboard',
     'user_management',
     'bus_management',
+    'pages',
 ]
 
 MIDDLEWARE = [
@@ -63,10 +64,10 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
-            os.path.join(BASE_DIR, 'templates', 'homepage'),
             os.path.join(BASE_DIR, 'templates', 'registration'),
             os.path.join(BASE_DIR, 'templates', 'driver_dashboard'),
             os.path.join(BASE_DIR, 'templates', 'commuter_dashboard'),
+            os.path.join(BASE_DIR, 'templates', 'pages'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
