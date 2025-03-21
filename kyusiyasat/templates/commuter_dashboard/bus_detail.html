@@ -1,25 +1,58 @@
-{% extends 'base.html' %} {% block content %}
-<div class="container">
-  <h1>Bus Details</h1>
-  <div class="bus-detail">
-    <p><strong>Driver:</strong> {{ driver }}</p>
-    <p><strong>Route:</strong> {{ route }}</p>
-    <p><strong>Plate Number:</strong> {{ plate_number }}</p>
-    <p><strong>Estimated Time of Arrival:</strong> {{ eta }}</p>
-    <p><strong>Time Departed:</strong> {{ time_departed }}</p>
-    <p><strong>Previous Station:</strong> {{ previous_station }}</p>
-    <p><strong>Next Station:</strong> {{ next_station }}</p>
-    <p><strong>Passengers:</strong> {{ passengers }}</p>
-    <p><strong>Traffic Condition:</strong> {{ traffic_condition }}</p>
-    <p><strong>Availability:</strong> {{ availability }}</p>
+{% extends 'base.html' %} 
+{% block content %}
+<div class="max-w-md mx-auto px-4 py-6"> 
+  <h1 class="text-2xl font-bold text-center mb-6 font-[Alata] text-gray-600">Bus Details</h1>
+  
+  <div class="bg-white p-4 rounded-lg shadow-md border border-gray-300">
+    <div class="space-y-2">
+      <div class="flex items-center">
+        <p class="text-blue-400 font-[Alata] mr-2">Driver:</p>
+        <p class="font-[Alata] text-gray-900">{{ driver }}</p>
+      </div>
+      <div class="flex items-center">
+        <p class="text-blue-400 font-[Alata] mr-2">Route:</p>
+        <p class="font-[Alata] text-gray-900">{{ route }}</p>
+      </div>
+      <div class="flex items-center">
+        <p class="text-blue-400 font-[Alata] mr-2">Plate Number:</p>
+        <p class="font-[Alata] text-gray-900">{{ plate_number }}</p>
+      </div>
+      <div class="flex items-center">
+        <p class="text-blue-400 font-[Alata] mr-2">Estimated Time of Arrival:</p>
+        <p class="font-[Alata] text-gray-900">{{ eta }}</p>
+      </div>
+      <div class="flex items-center">
+        <p class="text-blue-400 font-[Alata] mr-2">Time Departed:</p>
+        <p class="font-[Alata] text-gray-900">{{ time_departed }}</p>
+      </div>
+      <div class="flex items-center">
+        <p class="text-blue-400 font-[Alata] mr-2">Previous Station:</p>
+        <p class="font-[Alata] text-gray-900">{{ previous_station }}</p>
+      </div>
+      <div class="flex items-center">
+        <p class="text-blue-400 font-[Alata] mr-2">Next Station:</p>
+        <p class="font-[Alata] text-gray-900">{{ next_station }}</p>
+      </div>
+      <div class="flex items-center">
+        <p class="text-blue-400 font-[Alata] mr-2">Passengers:</p>
+        <p class="font-[Alata] text-gray-900">{{ passengers }}</p>
+      </div>
+      <div class="flex items-center">
+        <p class="text-blue-400 font-[Alata] mr-2">Traffic Condition:</p>
+        <p class="font-[Alata] text-gray-900">{{ traffic_condition }}</p>
+      </div>
+      <div class="flex items-center">
+        <p class="text-blue-400 font-[Alata] mr-2">Availability:</p>
+        <p class="font-[Alata] text-gray-900">{{ availability }}</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="mt-6 text-center">
+    <a href="{% if request.GET.urlencode %}{% url 'commuter_dashboard' %}?{{ request.GET.urlencode }}{% else %}{% url 'commuter_dashboard' %}{% endif %}" 
+       class="bg-sky-600 hover:bg-blue-500 text-white px-4 py-2 rounded transition font-[Alata]">
+      Back to Dashboard
+    </a>
   </div>
 </div>
-
-<br />
-<a
-  href=" {% if request.GET.urlencode %}{% url 'commuter_dashboard' %}?{{ request.GET.urlencode }}{% else %}{% url 'commuter_dashboard' %}{% endif %}"
-  class="btn btn-secondary"
-  >Back to Dashboard</a
->
-<br />
 {% endblock %}

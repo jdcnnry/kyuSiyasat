@@ -1,15 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Login</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn">Login</button>
-    </form>
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-sm">
+        <h2 class="text-3xl font-semibold text-gray-900 text-center mb-6">Login</h2>
 
-    <p id="subtext">No account yet?</p>
-    <a href="{% url 'user_management:register' %}">
-        <button type="button" class="btn btn-secondary">Sign Up!</button>
-    </a>
+        <!-- Display error messages from the form -->
+        {% if form.errors %}
+            <div class="mb-4">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <p class="text-red-500 text-sm text-center">{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST" class="space-y-5">
+            {% csrf_token %}
+
+            <div>
+                <label class="block text-gray-700 font-medium">Username</label>
+                {{ form.username }}
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-medium">Password</label>
+                {{ form.password }}
+            </div>
+
+            <button type="submit" 
+                class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+                Login
+            </button>
+        </form>
+
+        <p class="text-center text-gray-600 mt-6">No Account Yet?</p>
+        <a href="{% url 'user_management:register' %}" 
+            class="block text-center bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition mt-3">
+            Sign Up!
+        </a>
+    </div>
+</div>
 {% endblock %}

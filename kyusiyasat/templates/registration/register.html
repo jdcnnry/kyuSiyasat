@@ -1,11 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg"> 
+        <!-- Increased max-w-lg for wider form -->
+        <h2 class="text-xl font-semibold text-gray-900 text-center mb-4">Register to KyuSiyasat!</h2>
 
-<h2>Register to KyuSiyasat!</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div>
+                <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ field.errors.0 }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <button type="submit"
+                class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition text-sm font-medium">
+                Register
+            </button>
+        </form>
+    </div>
+</div>
+
+<style>
+    input, select {
+        width: 100%; /* Ensures full width */
+        padding: 10px;
+        border: 1px solid #d1d5db; /* Light gray border */
+        border-radius: 5px;
+        font-size: 14px;
+    }
+</style>
 {% endblock %}
