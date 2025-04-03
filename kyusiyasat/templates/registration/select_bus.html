@@ -1,10 +1,21 @@
 {% extends 'base.html' %}
 
+{% block sidebar %}{% endblock %}
+
 {% block content %}
-  <h2>Select Your Bus</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
+  <div class="max-w-2xl mx-auto p-6">
+    <h2 class="text-2xl font-semibold text-center mb-6">Select Your Bus</h2>
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      <div class="bg-white shadow-md rounded-lg p-6 space-y-4">
+        {% for field in form %}
+          <div>
+            <label class="block text-gray-700 font-medium mb-1">{{ field.label }}</label>
+            {{ field }}
+          </div>
+        {% endfor %}
+      </div>
+      <button type="submit" class="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">Submit</button>
+    </form>
+  </div>
 {% endblock %}

@@ -1,77 +1,102 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <h1>Welcome, {{ user.username }}!</h1>
+    <div class="max-w-5xl mx-auto px-4"> 
+        <h1 class="text-2xl font-bold text-center text-gray-600 mb-6 font-[Alata]">Welcome, {{ user.username }} !</h1>
 
-    <!-- Filter Form -->
-    <form method="GET" action="" class="filter-form">
-        <div class="filter-container">
-            <div class="filter-item">
-                <label for="status">Status:</label>
-                <select name="status" id="status">
-                    <option value="">All</option>
-                    <option value="Operating" {% if status_filter == "Operating" %}selected{% endif %}>Operating</option>
-                    <option value="Not Operating" {% if status_filter == "Not Operating" %}selected{% endif %}>Not Operating</option>
-                </select>
-            </div>
-        
-            <div class="filter-item">
-                <label for="route">Route:</label>
-                <select name="route" id="route">
-                    <option value="">All</option>
-                    {% for route in routes %}
-                        <option value="{{ route.route_id }}" {% if route_filter|stringformat:"s" == route.route_id|stringformat:"s" %}selected{% endif %}>
-                            {{ route.route_name }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <button type="submit" class="filter-button">Filter</button>
-            <button type="button" style="background-color: #C0392B;" onclick="resetFilters()">Reset Filter</button>
-            </button>
-        </div>
-    </form>
-
-    <script>
-        function resetFilters() {
-            window.location.href = "{% url 'commuter_dashboard' %}";
-        }
-    </script>
-        
-<!-- Bus Grid -->
-<div class="bus-grid">
-    {% for bus in buses %}
-      {% if bus.driver_name != "TBA" %}
-        {% if bus.status == 'Not Operating' %}
-            <div class="bus-card inactive" data-url="{% url 'commuter_dashboard' %}" onclick="redirectToDashboard(this);">
-        {% else %}
-            <a href="{% url 'bus_detail' bus.bus_id %}?{{ request.GET.urlencode }}" class="bus-card-link">
-                <div class="bus-card">
-        {% endif %}
-                    <h2>BUS {{ bus.bus_id }}</h2>
-                    <p><strong>Driver:</strong> {{ bus.driver_name }}</p>
-                    <p><strong>Route:</strong> {{ bus.busroute.route.route_name|default:"No Assigned Route" }}</p>
-                    <p><strong>Plate:</strong> {{ bus.bus_plate }}</p>
-
-                    {% with bus_log=bus.buslog_set.last %} 
-                        {% if bus_log %}
-                            <p><strong>Going to:</strong> {{ bus_log.to_station.station_name }}</p>
-                        {% else %}
-                            <p><strong>Going to:</strong> No assigned destination</p>
-                        {% endif %}
-                    {% endwith %}
-                    
-        {% if bus.status == 'Not Operating' %}
-            </div>
-        {% else %}
+        <!-- Filters -->
+        <div class="flex justify-center mb-6">
+            <form method="GET" action="" class="flex flex-wrap items-center justify-center gap-4">
+                <div class="flex items-center gap-2">
+                    <label for="status" class="text-sm font-medium">Status:</label>
+                    <select name="status" id="status" class="px-8 border-gray-300 p-1 rounded">
+                        <option value="">All</option>
+                        <option value="Operating" {% if status_filter == "Operating" %}selected{% endif %}>Operating</option>
+                        <option value="Not Operating" {% if status_filter == "Not Operating" %}selected{% endif %}>Not Operating</option>
+                    </select>
                 </div>
-            </a>
-            {% endif %}
-        {% endif %}
-    {% empty %}
-        <p>No buses found.</p>
-    {% endfor %}
-</div>
+                
+                <div class="flex items-center gap-2">
+                    <label for="route" class="text-sm font-medium">Route:</label>
+                    <select name="route" id="route" class="px-10 border border-gray-300 p-1 rounded">
+                        <option value="">All</option>
+                        {% for route in routes %}
+                            <option value="{{ route.route_id }}" {% if route_filter|stringformat:"s" == route.route_id|stringformat:"s" %}selected{% endif %}>
+                                {{ route.route_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-7 py-1 rounded transition">Filter</button>
+                <button type="button" class="bg-red-500 hover:bg-red-600 text-white px-7 py-1 rounded transition" onclick="resetFilters()">Reset</button>
+            </form>
+        </div>
 
+        <script>
+            function resetFilters() {
+                window.location.href = "{% url 'commuter_dashboard' %}";
+            }
+        </script>
+
+        <!-- Bus Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6"> 
+            {% for bus in buses %}
+                {% if bus.driver_name != "TBA" %}
+                    {% if bus.status == 'Not Operating' %}
+                        <div class="p-6 rounded-lg shadow-md border border-gray-300 bg-red-500 text-white h-64 flex flex-col justify-between cursor-not-allowed">
+                            <h2 class="text-2xl font-[Alata] text-white">BUS {{ bus.bus_id }}</h2>
+                            <div class="grid grid-cols-2 gap-y-2 mt-2">
+                                <div>
+                                    <p class="text-xs font-[Alata] text-white">DRIVER</p>
+                                    <p class="font-[Alata] text-white">{{ bus.driver_name }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-[Alata] text-white">ROUTE</p>
+                                    <p class="font-[Alata] text-white">{{ bus.busroute.route.route_name|default:"No Assigned Route" }}</p>
+                                </div>
+                            </div>
+                            <hr class="my-2 border-white">
+                            <p class="text-lg font-[Alata] text-center text-white">{{ bus.bus_plate }}</p>
+                            {% with bus_log=bus.buslog_set.last %}
+                                <p class="text-xs font-[Alata] mt-2 text-white">GOING TO:</p>
+                                {% if bus_log and bus_log.to_station %}
+                                    <p class="font-[Alata] text-center text-white">{{ bus.next_station }}</p>
+                                {% else %}
+                                    <p class="font-[Alata] text-center text-white">No assigned destination</p>
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    {% else %}
+                        <a href="{% url 'bus_detail' bus.bus_id %}" class="block w-full h-full">
+                            <div class="p-6 rounded-lg shadow-md border border-gray-300 bg-white hover:bg-blue-600 hover:scale-105 hover:shadow-lg group hover:text-white h-64 flex flex-col justify-between transition">
+                                <h2 class="text-2xl text-blue-900 font-[Alata] group-hover:text-white">BUS {{ bus.bus_id }}</h2>
+                                <div class="grid grid-cols-2 gap-y-2 mt-2">
+                                    <div>
+                                        <p class="text-xs font-[Alata] text-blue-400 group-hover:text-white">DRIVER</p>
+                                        <p class="font-[Alata] text-gray-900 group-hover:text-white">{{ bus.driver_name }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-[Alata] text-blue-400 group-hover:text-white">ROUTE</p>
+                                        <p class="font-[Alata] text-gray-900 group-hover:text-white">{{ bus.busroute.route.route_name|default:"No Assigned Route" }}</p>
+                                    </div>
+                                </div>
+                                <hr class="my-2 border-gray-300 group-hover:border-white">
+                                <p class="text-lg font-[Alata] text-center text-gray-900 group-hover:text-white">{{ bus.bus_plate }}</p>
+                                {% with bus_log=bus.buslog_set.last %}
+                                    <p class="text-xs font-[Alata] mt-2 text-blue-400 group-hover:text-white">GOING TO:</p>
+                                    {% if bus_log and bus_log.to_station %}
+                                        <p class="font-[Alata] text-center text-gray-900 group-hover:text-white">{{ bus.next_station }}</p>
+                                    {% else %}
+                                        <p class="font-[Alata] text-center text-gray-900 group-hover:text-white">No assigned destination</p>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                        </a>
+                    {% endif %}   
+                {% endif %}
+            {% empty %}
+                <p class="text-center text-gray-600">No buses found.</p>
+            {% endfor %}
+        </div>
+    </div> 
 {% endblock %}

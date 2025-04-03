@@ -20,12 +20,15 @@ def commuter_dashboard(request):
     if route_filter:
         buses = buses.filter(busroute__route__route_id=route_filter)
 
-    # Fetch drivers assigned to each bus and attach them to the bus objects
+    routes = Route.objects.all()  # Get all routes for the filter dropdown
+
+    # Fetch drivers and next station for each bus
     for bus in buses:
         driver_profile = Profile.objects.filter(user_type='driver', bus=bus).select_related('user').first()
         bus.driver_name = driver_profile.user.get_full_name() if driver_profile else "TBA"
 
-    routes = Route.objects.all()  # Get all routes for the filter dropdown
+        latest_log = BusLog.objects.filter(bus=bus).select_related('to_station').order_by('-arrival_time').first()
+        bus.next_station = latest_log.to_station.station_name if latest_log and latest_log.to_station else "No assigned destination"
 
     return render(request, 'commuter_dashboard.html', {
         'buses': buses,
@@ -33,6 +36,7 @@ def commuter_dashboard(request):
         'status_filter': status_filter,
         'route_filter': route_filter,
     })
+
 
 @login_required
 @user_type_required('commuter')

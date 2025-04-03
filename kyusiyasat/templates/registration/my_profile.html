@@ -1,27 +1,57 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <h2>My Profile</h2>
-    <div class="card">
-        <div class="profile-details">
-            <p><strong>Full Name:</strong> {{ user.get_full_name }}</p>
-            <p><strong>Username:</strong> {{ user.username }}</p>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Role:</strong> {{ user.profile.get_user_type_display }}</p>
+<div class="flex justify-center items-center min-h-screen bg-gray-100 font-inter">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
+        <div class="flex space-x-8">
+            <!-- Profile Picture -->
+            <div class="w-24 h-24">
+                <img src="{{ user.profile.image.url }}" alt="Profile Picture"
+                    class="w-24 h-24 rounded-full object-cover border">
+            </div>
+
+            <!-- Profile Display -->
+            <div class="grid grid-cols-2 gap-6 flex-grow">
+                <div>
+                    <label class="block text-gray-700 font-medium">Your Name</label>
+                    <input type="text" value="{{ user.get_full_name }}" disabled
+                        class="w-full border-gray-300 rounded-lg p-2 bg-gray-100 cursor-not-allowed">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-medium">Password</label>
+                    <input type="password" value="********" disabled
+                        class="w-full border-gray-300 rounded-lg p-2 bg-gray-100 cursor-not-allowed">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-medium">Email</label>
+                    <input type="email" value="{{ user.email }}" disabled
+                        class="w-full border-gray-300 rounded-lg p-2 bg-gray-100 cursor-not-allowed">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-medium">Confirm</label>
+                    <input type="password" value="********" disabled
+                        class="w-full border-gray-300 rounded-lg p-2 bg-gray-100 cursor-not-allowed">
+                </div>
+
+                <div class="col-span-2">
+                    <label class="block text-gray-700 font-medium">Role</label>
+                    <input type="text" value="{{ user.profile.get_user_type_display }}" disabled
+                        class="w-full border-gray-300 rounded-lg p-2 bg-gray-100 cursor-not-allowed">
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Profile Button -->
+        <div class="mt-6 flex justify-end">
+            <a href="{% url 'user_management:update_profile' %}">
+                <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                    Edit Profile
+                </button>
+            </a>
         </div>
     </div>
-</div>
-
-<div class="button-container">
-    <a href="{% url 'user_management:update_profile' %}">
-        <button>Edit Profile</button>
-    </a>
-</div>
-
-<div class="button-container">
-    <a href="{% url 'driver_dashboard' %}">
-        <button>Back to Dashboard</button>
-    </a>
 </div>
 {% endblock %}
