@@ -5,6 +5,7 @@ from .forms import BusSelectionForm, UserRegistrationForm, ProfileUpdateForm
 from .decorators import user_type_required
 from django.contrib import messages
 
+
 def register(request):
     """Handles user registration."""
     if request.method == 'POST':
