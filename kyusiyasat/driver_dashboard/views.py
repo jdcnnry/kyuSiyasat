@@ -54,6 +54,8 @@ def create_bus_log(request):
             form.save()
             messages.success(request, "Bus log created successfully.")
             return redirect('create_bus_log')
+        else:
+            messages.error(request, "Please enter both adjacent stations.")
     else:
         form = BusLogForm(user=request.user)
 
