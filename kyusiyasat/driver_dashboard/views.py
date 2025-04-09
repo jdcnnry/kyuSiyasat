@@ -2,15 +2,49 @@ from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from django.shortcuts import render
 from django.contrib import messages
-from bus_management.models import Bus
+from bus_management.models import Bus, BusLog
 from .forms import BusLogForm, BusStatusForm
 from django.contrib.auth.decorators import login_required
 from user_management.decorators import user_type_required
+from user_management.models import Profile
+
+
+# @login_required
+# @user_type_required('driver')
+# def driver_dashboard(request):
+#     return render(request, 'driver_dashboard.html', {'user': request.user})
 
 @login_required
 @user_type_required('driver')
 def driver_dashboard(request):
-    return render(request, 'driver_dashboard.html', {'user': request.user})
+    # Get the driver profile
+    driver_profile = Profile.objects.get(user=request.user)
+    
+    # Get the bus assigned to the driver
+    bus = Bus.objects.filter(bus_id=driver_profile.bus.bus_id).first()  # Adjust to use bus ID
+    
+    # Get the latest bus log
+    latest_log = BusLog.objects.filter(bus=bus).order_by('-arrival_time').first()
+    
+    # Prepare bus details and bus status
+    bus_details = {
+        'bus': bus,
+        'plate_number': bus.bus_plate,
+        'route': bus.busroute.route.route_name if bus.busroute else "No Assigned Route",
+        'time_departed': latest_log.time_departed if latest_log else "TBA",
+        'previous_station': latest_log.from_station.station_name if latest_log else "TBA",
+        'next_station': latest_log.to_station.station_name if latest_log else "TBA",
+        'passengers': latest_log.passenger_count if latest_log else "TBA",
+        'traffic_condition': latest_log.traffic_condition if latest_log else "TBA",
+        'availability': "Available" if bus.status == "Operating" else "Not Available",
+    }
+    
+    return render(request, 'driver_dashboard.html', {
+        'user': request.user,
+        'bus': bus,
+        'bus_details': bus_details,
+        'current_status': bus.status,  # Pass current status to the template
+    })
 
 @login_required
 def create_bus_log(request):
@@ -20,6 +54,8 @@ def create_bus_log(request):
             form.save()
             messages.success(request, "Bus log created successfully.")
             return redirect('create_bus_log')
+        else:
+            messages.error(request, "Please enter both adjacent stations.")
     else:
         form = BusLogForm(user=request.user)
 
