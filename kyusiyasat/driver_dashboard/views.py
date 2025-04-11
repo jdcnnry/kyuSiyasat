@@ -9,24 +9,15 @@ from user_management.decorators import user_type_required
 from user_management.models import Profile
 
 
-# @login_required
-# @user_type_required('driver')
-# def driver_dashboard(request):
-#     return render(request, 'driver_dashboard.html', {'user': request.user})
-
 @login_required
 @user_type_required('driver')
 def driver_dashboard(request):
-    # Get the driver profile
     driver_profile = Profile.objects.get(user=request.user)
     
-    # Get the bus assigned to the driver
     bus = Bus.objects.filter(bus_id=driver_profile.bus.bus_id).first()  # Adjust to use bus ID
     
-    # Get the latest bus log
     latest_log = BusLog.objects.filter(bus=bus).order_by('-arrival_time').first()
     
-    # Prepare bus details and bus status
     bus_details = {
         'bus': bus,
         'plate_number': bus.bus_plate,
@@ -43,7 +34,7 @@ def driver_dashboard(request):
         'user': request.user,
         'bus': bus,
         'bus_details': bus_details,
-        'current_status': bus.status,  # Pass current status to the template
+        'current_status': bus.status,
     })
 
 @login_required

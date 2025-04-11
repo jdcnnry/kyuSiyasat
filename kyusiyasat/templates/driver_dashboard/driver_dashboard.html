@@ -2,13 +2,11 @@
 
 {% block content %}
 <div class="max-w-4xl mx-auto p-6">
-    <!-- Driver title and welcome section in its own white box -->
     <div class="mb-6 p-6 bg-white shadow-lg rounded-lg font-[Alata]">
         <h2 class="text-2xl font-bold">Driver Dashboard</h2>
         <p class="text-gray-700">Welcome, <span class="font-semibold">{{ user.username }}</span>!</p>
     </div>
 
-    <!-- Bus details section in a separate white box -->
     <div class="mb-6 p-6 bg-white shadow-lg rounded-lg font-[Alata]">
         <h3 class="text-xl font-semibold">Latest Log</h3>
         <p><strong>Bus Plate:</strong> {{ bus_details.plate_number }}</p>
@@ -21,13 +19,11 @@
         <p><strong>Availability:</strong> {{ bus_details.availability }}</p>
     </div>
 
-    <!-- Current Bus Status section in a separate white box -->
     <div class="mb-6 p-6 bg-white shadow-lg rounded-lg font-[Alata]">
         <h3 class="text-xl font-semibold">Current Status</h3>
         <p>{{ current_status }}</p>
     </div>
 
-    <!-- Action buttons section without a white box -->
     <div class="flex space-x-4">
         <a href="{% url 'create_bus_log' %}" class="bg-sky-600 hover:bg-blue-500 text-white px-4 py-2 rounded transition font-[Alata]">Create Bus Log</a>
         <a href="{% url 'update_bus_status' %}" class="bg-sky-600 hover:bg-blue-500 text-white px-4 py-2 rounded transition font-[Alata]">Update Bus Status</a>
