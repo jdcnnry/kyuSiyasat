@@ -12,6 +12,7 @@ class Profile(models.Model):
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
     bus = models.ForeignKey(Bus, on_delete=models.SET_NULL, null=True, blank=True)
     image = models.ImageField(upload_to='profile_pics/', default='default.jpg', blank=True)
+    has_seen_getting_started = models.BooleanField(default=False)
 
 
     def save(self, *args, **kwargs):
