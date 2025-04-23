@@ -1,8 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="flex justify-center items-center min-h-screen bg-gray-100 font-inter">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
+<div class="flex justify-center items-center min-h-screen bg-gray-100 font-inter flex-col space-y-4">
+
+    <!-- Display Django Messages -->
+    {% if messages %}
+        <div class="w-full max-w-4xl">
+            {% for message in messages %}
+                <div class="p-4 rounded-lg text-white {% if message.tags == 'success' %}bg-green-500{% else %}bg-red-500{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Profile Card -->
+    <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-4xl">
         <div class="flex space-x-8">
             <!-- Profile Picture -->
             <div class="w-24 h-24">
