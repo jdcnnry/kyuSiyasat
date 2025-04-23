@@ -2,6 +2,23 @@
 
 {% block content %}
 <div class="max-w-4xl mx-auto p-6">
+
+    {% if messages %}
+        <div id="message-container" class="mb-6 space-y-2">
+            {% for message in messages %}
+                {% if message.tags == "success" %}
+                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded text-sm font-[Alata] fade-message">
+                        {{ message }}
+                    </div>
+                {% elif message.tags == "error" %}
+                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded text-sm font-[Alata] fade-message">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div class="mb-6 p-6 bg-white shadow-lg rounded-lg font-[Alata]">
         <h2 class="text-2xl font-bold">Driver Dashboard</h2>
         <p class="text-gray-700">Welcome, <span class="font-semibold">{{ user.username }}</span>!</p>
@@ -29,4 +46,16 @@
         <a href="{% url 'update_bus_status' %}" class="bg-sky-600 hover:bg-blue-500 text-white px-4 py-2 rounded transition font-[Alata]">Update Bus Status</a>
     </div>
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const messages = document.querySelectorAll('.fade-message');
+        messages.forEach(message => {
+            setTimeout(() => {
+                message.classList.add('opacity-0', 'transition-opacity', 'duration-1000');
+                setTimeout(() => message.remove(), 1000);
+            }, 5000);
+        });
+    });
+</script>
 {% endblock %}

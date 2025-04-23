@@ -38,6 +38,7 @@ class BusLogForm(forms.ModelForm):
         route = cleaned_data.get("route")
         from_station = cleaned_data.get("from_station")
         to_station = cleaned_data.get("to_station")
+        passenger_count = cleaned_data.get("passenger_count")
 
         if bus and route:
             # Check if the selected bus is assigned to the selected route
@@ -61,6 +62,12 @@ class BusLogForm(forms.ModelForm):
             if abs(from_order - to_order) != 1:
                 raise forms.ValidationError("The selected stations must be adjacent.")
 
+        if bus and passenger_count is not None:
+            # Check if the passenger count exceeds the bus capacity
+            bus_capacity = bus.capacity  # Assuming the bus model has a 'capacity' field
+            if passenger_count > bus_capacity:
+                raise forms.ValidationError(f"Passenger count cannot exceed the bus capacity of {bus_capacity}.")
+
         return cleaned_data
 
     def save(self, commit=True):
@@ -72,6 +79,7 @@ class BusLogForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
     
 
 class BusStatusForm(forms.ModelForm):
