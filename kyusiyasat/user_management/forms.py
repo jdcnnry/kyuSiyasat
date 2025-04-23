@@ -37,7 +37,7 @@ class BusSelectionForm(forms.Form):
         super().__init__(*args, **kwargs)
 
         assigned_buses = Profile.objects.exclude(bus__isnull=True).values_list('bus', flat=True)
-        available_buses = Bus.objects.exclude(bus_id__in=assigned_buses)
+        available_buses = Bus.objects.exclude(bus_id__in=assigned_buses).order_by('bus_plate')
 
         self.fields['bus'] = forms.ModelChoiceField(
                 queryset=available_buses,
