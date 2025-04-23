@@ -1,58 +1,51 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% block content %}
-<div class="max-w-md mx-auto px-4 py-6"> 
-  <h1 class="text-2xl font-bold text-center mb-6 font-[Alata] text-gray-600">Bus Details</h1>
-  
-  <div class="bg-white p-4 rounded-lg shadow-md border border-gray-300">
-    <div class="space-y-2">
-      <div class="flex items-center">
-        <p class="text-blue-400 font-[Alata] mr-2">Driver:</p>
-        <p class="font-[Alata] text-gray-900">{{ driver }}</p>
-      </div>
-      <div class="flex items-center">
-        <p class="text-blue-400 font-[Alata] mr-2">Route:</p>
-        <p class="font-[Alata] text-gray-900">{{ route }}</p>
-      </div>
-      <div class="flex items-center">
-        <p class="text-blue-400 font-[Alata] mr-2">Plate Number:</p>
-        <p class="font-[Alata] text-gray-900">{{ plate_number }}</p>
-      </div>
-      <div class="flex items-center">
-        <p class="text-blue-400 font-[Alata] mr-2">Estimated Time of Arrival:</p>
-        <p class="font-[Alata] text-gray-900">{{ eta }}</p>
-      </div>
-      <div class="flex items-center">
-        <p class="text-blue-400 font-[Alata] mr-2">Time Departed:</p>
-        <p class="font-[Alata] text-gray-900">{{ time_departed }}</p>
-      </div>
-      <div class="flex items-center">
-        <p class="text-blue-400 font-[Alata] mr-2">Previous Station:</p>
-        <p class="font-[Alata] text-gray-900">{{ previous_station }}</p>
-      </div>
-      <div class="flex items-center">
-        <p class="text-blue-400 font-[Alata] mr-2">Next Station:</p>
-        <p class="font-[Alata] text-gray-900">{{ next_station }}</p>
-      </div>
-      <div class="flex items-center">
-        <p class="text-blue-400 font-[Alata] mr-2">Passengers:</p>
-        <p class="font-[Alata] text-gray-900">{{ passengers }}</p>
-      </div>
-      <div class="flex items-center">
-        <p class="text-blue-400 font-[Alata] mr-2">Traffic Condition:</p>
-        <p class="font-[Alata] text-gray-900">{{ traffic_condition }}</p>
-      </div>
-      <div class="flex items-center">
-        <p class="text-blue-400 font-[Alata] mr-2">Availability:</p>
-        <p class="font-[Alata] text-gray-900">{{ availability }}</p>
-      </div>
-    </div>
-  </div>
-  
-  <div class="mt-6 text-center">
+<div class="max-w-5xl mx-auto px-4 py-8">
+  <div class="bg-white rounded-xl shadow-md border-2 border-blue-400 p-6">
+
+    <!-- Back Button -->
     <a href="{% if request.GET.urlencode %}{% url 'commuter_dashboard' %}?{{ request.GET.urlencode }}{% else %}{% url 'commuter_dashboard' %}{% endif %}" 
-       class="bg-sky-600 hover:bg-blue-500 text-white px-4 py-2 rounded transition font-[Alata]">
-      Back to Dashboard
+       class="text-blue-400 text-xl font-[Alata] hover:text-blue-600 block mb-4">
+      ←
     </a>
+
+    <!-- Bus Number -->
+    <p class="text-3xl text-[#2E2F67] font-[Alata] font-bold mb-6">BUS {{ bus.bus_id }}</p>
+
+    <!-- 4 Columns with 3 rows each -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 text-sm text-gray-900">
+
+      <!-- Column 1 -->
+      <div>
+        <p class="text-blue-400 font-[Lato]">DRIVER</p>
+        <p class="font-[Alata] mb-4">{{ driver }}</p>
+        <p class="text-blue-400 font-[Lato]">ROUTE</p>
+        <p class="font-[Alata] mb-4">{{ route }}</p>
+        <p class="text-blue-400 font-[Lato]">PLATE NUMBER</p>
+        <p class="font-[Alata]">{{ plate_number }}</p>
+      </div>
+
+      <!-- Column 2 -->
+      <div>
+        <p class="text-blue-400 font-[Lato]">TIME DEPARTED</p>
+        <p class="font-[Alata] mb-4">{{ time_departed }}</p>
+        <p class="text-blue-400 font-[Lato]">PREVIOUS STATION</p>
+        <p class="font-[Alata] mb-4">{{ previous_station }}</p>
+        <p class="text-blue-400 font-[Lato]">TRAFFIC CONDITION</p>
+        <p class="font-[Alata] mb-4">{{ traffic_condition }}</p> 
+      </div>
+
+      <!-- Column 3 -->
+      <div>
+        <p class="text-blue-400 font-[Lato]">ESTIMATED TIME OF ARRIVAL</p>
+        <p class="font-[Alata] mb-4">{{ eta }}</p>
+        <p class="text-blue-400 font-[Lato]">NEXT STATION</p>
+        <p class="font-[Alata]  mb-4">{{ next_station }}</p>
+        <p class="text-blue-400 font-[Lato]">PASSENGERS</p>
+        <p class="font-[Alata] mb-4">{{ passengers }}</p>
+      </div>
+
+    </div>
   </div>
 </div>
 {% endblock %}
