@@ -64,7 +64,7 @@ class BusLogForm(forms.ModelForm):
 
             if from_order - to_order != -1:
                 errors.append("The selected stations must be adjacent.")
-        
+  
         if bus and passenger_count is not None:
             # Check if the passenger count exceeds the bus capacity
             bus_capacity = bus.capacity

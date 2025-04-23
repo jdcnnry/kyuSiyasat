@@ -13,12 +13,14 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+
             if user.profile.user_type == 'driver':
-                return redirect('user_management:select_bus')  
+                return redirect('user_management:select_bus')
             else:
-                return redirect('commuter_dashboard')
+                return redirect('pages:getting_started_commuter')
     else:
         form = UserRegistrationForm()
+
     return render(request, 'register.html', {'form': form})
 
 @login_required
@@ -26,17 +28,26 @@ def my_profile(request):
     """Renders the user's profile page."""
     return render(request, 'my_profile.html', {'user': request.user})
 
-@login_required
 def user_redirect_view(request):
-    """Redirects users to the appropriate dashboard after login."""
+    """Redirects users to the appropriate page after login."""
     if request.user.is_authenticated:
+        if not request.user.profile.has_seen_getting_started:
+            # Redirect to the appropriate "getting started" page
+            if request.user.profile.user_type == 'driver':
+                return redirect('pages:getting_started_driver')
+            else:
+                return redirect('pages:getting_started_commuter')
+        
+        # Redirect based on user type after they have seen the getting started page
         if request.user.profile.user_type == 'driver':
             if not request.user.profile.bus:
                 return redirect('user_management:select_bus')
-            return redirect('driver_dashboard')  
+            return redirect('driver_dashboard')
+        
         return redirect('commuter_dashboard')
-    
+
     return redirect('login')
+
 
 @login_required
 @user_type_required('driver')
@@ -52,11 +63,12 @@ def select_bus(request):
             profile = request.user.profile
             profile.bus = bus
             profile.save()
-            return redirect('driver_dashboard') 
+            return redirect('pages:getting_started_driver')
     else:
         form = BusSelectionForm(user=request.user)
 
     return render(request, 'registration/select_bus.html', {'form': form})
+
 
 @login_required
 def update_profile(request):
@@ -70,7 +82,7 @@ def update_profile(request):
             form.save()
             messages.success(request, "Your profile has been updated successfully!")
             return redirect('user_management:my_profile')
-        
+          
         else:
             messages.error(request, "Error updating profile. Please check the form.")
     else:
