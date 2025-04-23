@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from .forms import BusSelectionForm, UserRegistrationForm, ProfileUpdateForm
+from .forms import BusSelectionForm, UserRegistrationForm, ProfileUpdateForm, CustomPasswordChangeForm
 from .decorators import user_type_required
 from django.contrib import messages
 
@@ -67,9 +67,36 @@ def update_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Your profile has been updated successfully!")
+            return render(request, 'my_profile.html', {'form': form})
+
         else:
             messages.error(request, "Error updating profile. Please check the form.")
     else:
         form = ProfileUpdateForm(instance=profile)
 
     return render(request, 'update_profile.html', {'form': form})
+
+def change_password(request):
+    if request.method == "POST":
+        form = CustomPasswordChangeForm(request.POST)
+        if form.is_valid():
+            current_password = form.cleaned_data["current_password"]
+            new_password = form.cleaned_data["new_password"]
+
+            # Authenticate the user with the current password
+            user = authenticate(username=request.user.username, password=current_password)
+
+            if user is not None:
+                # Set the new password and keep the user logged in
+                user.set_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user)
+
+                messages.success(request, "Your password has been successfully changed.")
+                return render(request, 'my_profile.html', {'form': form})
+            else:
+                messages.error(request, "The current password is incorrect.")
+    else:
+        form = CustomPasswordChangeForm()
+
+    return render(request, 'registration/change_password.html', {'form': form})
