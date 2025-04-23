@@ -1,15 +1,20 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="container">
-    <h2>Bus Routes</h2>
-    <p>Here are the QCity Libreng Sakay Bus Routes:</p>
-<!-- TO DO: -->
+  <div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="max-w-7xl mx-auto p-4 bg-white shadow-lg rounded-lg">
+      <h2 class="text-xl font-semibold text-center mb-4">
+        Quezon City Bus Routes
+      </h2>
 
-<div class="button-container">
-    <a href="{% url 'driver_dashboard' %}">
-        <button>Back to Dashboard</button>
-    </a>
+      <div class="flex justify-center">
+        <img
+          src="../../static/images/bus-routes.png    "
+          alt="Quezon City Bus Routes"
+          class="max-w-full h-auto rounded"
+        />
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
 </div>
-
-{% endblock %}

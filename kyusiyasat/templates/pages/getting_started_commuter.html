@@ -1,21 +1,54 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
+<main class="flex-1 p-10">
+  <h2 class="text-2xl font-semibold mb-4">Welcome, Commuter!</h2>
+  <p class="my-5 font-semibold">Here’s how to get started:</p>
 
-{% block content %}
-<div class="container">
-    <h2>Welcome, Commuter!</h2>
-    <p>Here’s how to get started:</p>
-<!-- TO DO -->
-</div>
+  <div class="bg-white rounded-lg shadow-md p-6 mb-4">
+    <h3 class="text-xl font-semibold">STEP 1</h3>
+    <p class="my-5 font-semibold">
+      Click on the "My Profile" tab to review your profile information. Make any
+      necessary edits to ensure your details are up to date.
+    </p>
+    <a href="/user/profile/" class="text-blue-600 hover:underline font-semibold"
+      >Redirect to “My Profile” tab</a
+    >
+  </div>
 
-<div class="button-container">
-    <a href="{% url 'pages:routes' %}">
-        <button>View Routes</button>
-    </a>
-</div>
+  <div class="bg-white rounded-lg shadow-md p-6 mb-4">
+    <h3 class="text-xl font-semibold">STEP 2</h3>
+    <p class="my-5 font-semibold">
+      Navigate to the "Routes" tab to check the available bus routes. Review the
+      routes to find the one that best fits your destination.
+    </p>
+    <a
+      href="{% url 'pages:routes' %}"
+      class="text-blue-600 hover:underline font-semibold"
+      >Redirect to “Routes” tab</a
+    >
+  </div>
 
-<div class="button-container">
-    <a href="{% url 'driver_dashboard' %}">
-        <button>Back to Dashboard</button>
-    </a>
-</div>
+  <div class="bg-white rounded-lg shadow-md p-6 mb-4">
+    <h3 class="text-xl font-semibold">STEP 3</h3>
+    <p class="my-5 font-semibold">
+      Go to the "Dashboard" tab to view the list of buses in real time. Use the
+      filter option to narrow down results based on your location.
+    </p>
+    <a
+      href="{% url 'commuter_dashboard' %}"
+      class="text-blue-600 hover:underline font-semibold"
+      >Redirect to “Dashboard” tab</a
+    >
+  </div>
+
+  <div class="bg-white rounded-lg shadow-md p-6 mb-4">
+    <h3 class="text-xl font-semibold">STEP 4</h3>
+    <p class="my-5 font-semibold">
+      Follow the steps above to ensure a smooth experience while using the
+      application.
+    </p>
+    <a href="#" class="text-blue-600 hover:underline font-semibold"
+      >Explore more options</a
+    >
+  </div>
+</main>
 {% endblock %}
