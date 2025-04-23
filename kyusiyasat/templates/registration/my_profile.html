@@ -3,6 +3,21 @@
 {% block content %}
 <div class="flex justify-center items-center min-h-screen bg-gray-100 font-inter">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
+        
+        <!-- Display messages -->
+        {% if messages %}
+            <div class="mb-4" id="message-container">
+                {% for message in messages %}
+                    <div class="text-center p-2 mb-2 rounded-lg 
+                        {% if message.tags == 'success' %} bg-green-100 text-green-600 
+                        {% elif message.tags == 'error' %} bg-red-100 text-red-600 
+                        {% else %} bg-blue-100 text-blue-600 {% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
         <div class="flex space-x-8">
             <!-- Profile Picture -->
             <div class="w-24 h-24">
@@ -54,4 +69,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    setTimeout(function() {
+        var messageContainer = document.getElementById('message-container');
+        if (messageContainer) {
+            messageContainer.style.display = 'none';
+        }
+    }, 5000);
+</script>
 {% endblock %}
