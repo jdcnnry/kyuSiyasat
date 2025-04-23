@@ -59,7 +59,7 @@ class BusLogForm(forms.ModelForm):
             from_order = station_order_map[from_station.station_id]
             to_order = station_order_map[to_station.station_id]
 
-            if abs(from_order - to_order) != 1:
+            if from_order - to_order != -1:
                 raise forms.ValidationError("The selected stations must be adjacent.")
 
         if bus and passenger_count is not None:
