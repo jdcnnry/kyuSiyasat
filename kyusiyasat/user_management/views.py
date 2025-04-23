@@ -62,13 +62,15 @@ def select_bus(request):
 def update_profile(request):
     """Allows users to update their profile information, including profile picture."""
     profile = request.user.profile
+    
     if request.method == "POST":
         form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
+
         if form.is_valid():
             form.save()
             messages.success(request, "Your profile has been updated successfully!")
-            return render(request, 'my_profile.html', {'form': form})
-
+            return redirect('user_management:my_profile')
+        
         else:
             messages.error(request, "Error updating profile. Please check the form.")
     else:
@@ -93,7 +95,7 @@ def change_password(request):
                 update_session_auth_hash(request, user)
 
                 messages.success(request, "Your password has been successfully changed.")
-                return render(request, 'my_profile.html', {'form': form})
+                return redirect('user_management:my_profile')
             else:
                 messages.error(request, "The current password is incorrect.")
     else:
