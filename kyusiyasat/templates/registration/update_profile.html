@@ -4,17 +4,6 @@
 <div class="flex justify-center items-center min-h-screen bg-gray-100 font-inter">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl">
 
-        <!-- Display Django Messages -->
-        {% if messages %}
-            <div class="mb-4">
-                {% for message in messages %}
-                    <div class="p-4 rounded-lg text-white {% if message.tags == 'success' %}bg-green-500{% else %}bg-red-500{% endif %}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-
         <div class="border-b flex space-x-6 text-gray-600 font-semibold">
             <button class="pb-2 border-b-2 border-blue-600 text-blue-600">Edit Profile</button>
         </div>
@@ -65,7 +54,7 @@
                     <label class="block text-gray-700 font-medium">Password</label>
                     <input type="password" value="********" disabled
                         class="w-full border-gray-300 rounded-lg p-2 bg-gray-100 cursor-not-allowed">
-                    <small><a href="{% url 'password_change' %}" class="text-blue-600 hover:underline">Change Password</a></small>
+                    <small><a href="{% url 'user_management:change_password' %}" class="text-blue-600 hover:underline">Change Password</a></small>
                 </div>
             </div>
 

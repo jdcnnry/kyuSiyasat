@@ -40,10 +40,13 @@ class BusLogForm(forms.ModelForm):
         to_station = cleaned_data.get("to_station")
         passenger_count = cleaned_data.get("passenger_count")
 
+        # Initialize a list to store error messages
+        errors = []
+
         if bus and route:
             # Check if the selected bus is assigned to the selected route
             if not BusRoute.objects.filter(bus=bus, route=route).exists():
-                raise forms.ValidationError("The selected bus is not assigned to the selected route.")
+                errors.append("The selected bus is not assigned to the selected route.")
 
         if route and from_station and to_station:
             # Get station assignments for the given route
@@ -53,20 +56,25 @@ class BusLogForm(forms.ModelForm):
             station_order_map = {sa.station.station_id: sa.station_order for sa in station_assignments}
 
             if from_station.station_id not in station_order_map or to_station.station_id not in station_order_map:
-                raise forms.ValidationError("Both stations must be part of the selected route.")
+                errors.append("Both stations must be part of the selected route.")
 
             # Check adjacency
             from_order = station_order_map[from_station.station_id]
             to_order = station_order_map[to_station.station_id]
 
             if from_order - to_order != -1:
-                raise forms.ValidationError("The selected stations must be adjacent.")
-
+                errors.append("The selected stations must be adjacent.")
+  
         if bus and passenger_count is not None:
             # Check if the passenger count exceeds the bus capacity
-            bus_capacity = bus.capacity  # Assuming the bus model has a 'capacity' field
+            bus_capacity = bus.capacity
             if passenger_count > bus_capacity:
-                raise forms.ValidationError(f"Passenger count cannot exceed the bus capacity of {bus_capacity}.")
+                errors.append(f"Passenger count cannot exceed the bus capacity of {bus_capacity}.")
+
+        # If any errors were collected, add them to the form
+        if errors:
+            for error in errors:
+                self.add_error(None, error)  # Add errors to non-field errors, or use a specific field name if needed
 
         return cleaned_data
 
