@@ -38,13 +38,14 @@ def driver_dashboard(request):
     })
 
 @login_required
+@user_type_required('driver')
 def create_bus_log(request):
     if request.method == 'POST':
         form = BusLogForm(request.POST, user=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, "Bus log created successfully.")
-            return redirect('create_bus_log')
+            return redirect('driver_dashboard')
         else:
             messages.error(request, "Please enter both adjacent stations.")
     else:
@@ -62,7 +63,7 @@ def update_bus_status(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Bus status updated successfully.")
-            return redirect('update_bus_status') 
+            return redirect('driver_dashboard') 
 
     bus.refresh_from_db()
     form = BusStatusForm(instance=bus)
