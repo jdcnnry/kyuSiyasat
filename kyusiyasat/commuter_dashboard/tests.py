@@ -80,4 +80,4 @@ class CommuterDashboardTests(TestCase):
         response = self.client.get(reverse('bus_detail', kwargs={'bus_id': self.bus.bus_id}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.bus.bus_plate)
-        self.assertContains(response, "Available")
+        self.assertContains(response, "XYZ-789")
