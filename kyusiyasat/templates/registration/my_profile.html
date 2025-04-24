@@ -7,7 +7,7 @@
     {% if messages %}
         <div class="w-full max-w-4xl">
             {% for message in messages %}
-                <div class="p-4 rounded-lg text-white {% if message.tags == 'success' %}bg-green-500{% else %}bg-red-500{% endif %}">
+                <div class="p-4 rounded-lg text-white fade-message {% if message.tags == 'success' %}bg-green-500{% else %}bg-red-500{% endif %}">
                     {{ message }}
                 </div>
             {% endfor %}
@@ -69,11 +69,14 @@
 </div>
 
 <script>
-    setTimeout(function() {
-        var messageContainer = document.getElementById('message-container');
-        if (messageContainer) {
-            messageContainer.style.display = 'none';
-        }
-    }, 5000);
+    window.addEventListener('DOMContentLoaded', () => {
+        const messages = document.querySelectorAll('.fade-message');
+        messages.forEach(message => {
+            setTimeout(() => {
+                message.classList.add('opacity-0', 'transition-opacity', 'duration-1000');
+                setTimeout(() => message.remove(), 1000);
+            }, 5000);
+        });
+    });
 </script>
 {% endblock %}
