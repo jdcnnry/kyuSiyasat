@@ -159,7 +159,7 @@ class UserRegistrationTest(TestCase):
         self.assertTrue(User.objects.filter(username='testuser').exists())
         self.assertTrue(Profile.objects.filter(user__username='testuser', user_type='driver').exists())
 
-    def test_register_driver_redirects_to_driver_dashboard(self):
+    def test_register_driver_redirects_to_getting_started(self):
         # Test that registering as a driver redirects to the driver dashboard.
         response = self.client.post(reverse('user_management:register'), {
             'username': 'driveruser',
@@ -178,11 +178,11 @@ class UserRegistrationTest(TestCase):
 
         self.assertTrue(User.objects.filter(username='driveruser').exists())
         self.client.login(username='driveruser', password='Testpassword123!')
-        response = self.client.get(reverse('driver_dashboard'))
+        response = self.client.get(reverse('pages:getting_started_driver'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'driver_dashboard.html')
+        self.assertTemplateUsed(response, 'getting_started_driver.html')
 
-    def test_register_commuter_redirects_to_commuter_dashboard(self):
+    def test_register_commuter_redirects_to_getting_started(self):
         # Test that registering as a commuter redirects to the commuter dashboard.
         response = self.client.post(reverse('user_management:register'), {
             'username': 'commuteruser',
@@ -193,13 +193,13 @@ class UserRegistrationTest(TestCase):
             'password2': 'Testpassword123!',
             'user_type': 'commuter',
         })
-        self.assertRedirects(response, reverse('commuter_dashboard'))  
+        self.assertRedirects(response, reverse('pages:getting_started_commuter'))  
 
         self.assertTrue(User.objects.filter(username='commuteruser').exists())
         self.client.login(username='commuteruser', password='Testpassword123!')
-        response = self.client.get(reverse('commuter_dashboard'))
+        response = self.client.get(reverse('pages:getting_started_commuter'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'commuter_dashboard.html')
+        self.assertTemplateUsed(response, 'getting_started_commuter.html')
     
     def test_commuter_cannot_select_bus(self):
         # Test that a commuter cannot access the select_bus view.
