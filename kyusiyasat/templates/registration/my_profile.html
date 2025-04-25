@@ -19,15 +19,17 @@
     <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-4xl">
         <div class="flex space-x-8">
             <!-- Profile Picture -->
-            <div class="w-24 h-24">
-                <img src="{{ user.profile.image.url }}" alt="Profile Picture"
-                    class="w-24 h-24 rounded-full object-cover border">
+            <div class="flex justify-center items-center">
+                <div class="w-24 h-24 overflow-hidden">
+                    <img src="{{ user.profile.image.url }}" alt="Profile Picture"
+                        class="w-full h-full rounded-full object-cover border">
+                </div>
             </div>
 
             <!-- Profile Display -->
             <div class="grid grid-cols-2 gap-6 flex-grow">
                 <div>
-                    <label class="block text-gray-700 font-medium">Your Name</label>
+                    <label class="block text-gray-700 font-medium">Name</label>
                     <input type="text" value="{{ user.get_full_name }}" disabled
                         class="w-full border-gray-300 rounded-lg p-2 bg-gray-100 cursor-not-allowed">
                 </div>
