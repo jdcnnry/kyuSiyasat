@@ -4,16 +4,21 @@
 <div class="max-w-4xl mx-auto p-6">
 
     {% if messages %}
-        <div id="message-container" class="mb-6 space-y-2">
-            {% for message in messages %}
-                {% if message.tags == "success" %}
-                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded text-sm font-[Alata] fade-message">
-                        {{ message }}
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-    {% endif %}
+    <div id="message-container" class="mb-6 space-y-2">
+        {% for message in messages %}
+            {% if "success" in message.tags %}
+                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded text-sm font-[Alata] fade-message">
+                    {{ message }}
+                </div>
+            {% elif "error" in message.tags %}
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 rounded text-sm font-[Alata]">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
+
 
     <div class="mb-6 p-6 bg-white shadow-lg rounded-lg font-[Alata]">
         <h2 class="text-2xl font-bold">Driver Dashboard</h2>
@@ -29,6 +34,7 @@
         <p><strong>Next Station:</strong> {{ bus_details.next_station }}</p>
         <p><strong>Passenger Count:</strong> {{ bus_details.passengers }}</p>
         <p><strong>Traffic Condition:</strong> {{ bus_details.traffic_condition }}</p>
+        <p><strong>ETA:</strong> {{ bus_details.eta }}</p>
         <p><strong>Availability:</strong> {{ bus_details.availability }}</p>
     </div>
 

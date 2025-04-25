@@ -86,6 +86,8 @@
                                     <p class="text-xs font-[Alata] mt-2 text-blue-400 group-hover:text-white">GOING TO:</p>
                                     {% if bus_log and bus_log.to_station %}
                                         <p class="font-[Alata] text-center text-gray-900 group-hover:text-white">{{ bus.next_station }}</p>
+                                        <p class="text-xs font-[Alata] mt-2 text-blue-400 group-hover:text-white">ETA:</p>
+                                        <p class="font-[Alata] text-center text-gray-900 group-hover:text-white">{{ bus.eta }}</p>
                                     {% else %}
                                         <p class="font-[Alata] text-center text-gray-900 group-hover:text-white">No assigned destination</p>
                                     {% endif %}
