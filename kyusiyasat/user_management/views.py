@@ -90,27 +90,23 @@ def update_profile(request):
 
     return render(request, 'update_profile.html', {'form': form})
 
+@login_required
 def change_password(request):
     if request.method == "POST":
-        form = CustomPasswordChangeForm(request.POST)
+        form = CustomPasswordChangeForm(request.POST, user=request.user)
         if form.is_valid():
-            current_password = form.cleaned_data["current_password"]
-            new_password = form.cleaned_data["new_password"]
+            new_password = form.cleaned_data['new_password']
+            request.user.set_password(new_password)
+            request.user.save()
 
-            # Authenticate the user with the current password
-            user = authenticate(username=request.user.username, password=current_password)
+            # Keep user logged in after password change
+            update_session_auth_hash(request, request.user)
 
-            if user is not None:
-                # Set the new password and keep the user logged in
-                user.set_password(new_password)
-                user.save()
-                update_session_auth_hash(request, user)
-
-                messages.success(request, "Your password has been successfully changed.")
-                return redirect('user_management:my_profile')
-            else:
-                messages.error(request, "The current password is incorrect.")
+            messages.success(request, "Password changed successfully.")
+            return redirect('user_management:my_profile')  # Change this as needed
+        else:
+            messages.error(request, "Please correct the errors below.")
     else:
-        form = CustomPasswordChangeForm()
+        form = CustomPasswordChangeForm(user=request.user)
 
     return render(request, 'registration/change_password.html', {'form': form})
