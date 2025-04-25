@@ -33,26 +33,14 @@
                 </div>
 
                 <div>
-                    <label class="block text-gray-700 font-medium">Password</label>
-                    <input type="password" value="********" disabled
-                        class="w-full border-gray-300 rounded-lg p-2 bg-gray-100 cursor-not-allowed">
-                </div>
-
-                <div>
-                    <label class="block text-gray-700 font-medium">Email</label>
-                    <input type="email" value="{{ user.email }}" disabled
-                        class="w-full border-gray-300 rounded-lg p-2 bg-gray-100 cursor-not-allowed">
-                </div>
-
-                <div>
-                    <label class="block text-gray-700 font-medium">Confirm</label>
-                    <input type="password" value="********" disabled
+                    <label class="block text-gray-700 font-medium">Role</label>
+                    <input type="text" value="{{ user.profile.get_user_type_display }}" disabled
                         class="w-full border-gray-300 rounded-lg p-2 bg-gray-100 cursor-not-allowed">
                 </div>
 
                 <div class="col-span-2">
-                    <label class="block text-gray-700 font-medium">Role</label>
-                    <input type="text" value="{{ user.profile.get_user_type_display }}" disabled
+                    <label class="block text-gray-700 font-medium">Email</label>
+                    <input type="email" value="{{ user.email }}" disabled
                         class="w-full border-gray-300 rounded-lg p-2 bg-gray-100 cursor-not-allowed">
                 </div>
             </div>
