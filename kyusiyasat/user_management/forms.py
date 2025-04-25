@@ -89,9 +89,18 @@ class ProfileUpdateForm(forms.ModelForm):
         return profile
 
 class CustomPasswordChangeForm(forms.Form):
-    current_password = forms.CharField(widget=forms.PasswordInput, label="Current Password")
-    new_password = forms.CharField(widget=forms.PasswordInput, label="New Password")
-    confirm_password = forms.CharField(widget=forms.PasswordInput, label="Confirm New Password")
+    current_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        label="Current Password"
+    )
+    new_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        label="New Password"
+    )
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        label="Confirm New Password"
+    )
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -99,10 +108,8 @@ class CustomPasswordChangeForm(forms.Form):
 
     def clean_current_password(self):
         current_password = self.cleaned_data.get('current_password')
-
         if self.user and not self.user.check_password(current_password):
             raise ValidationError("Current password is incorrect.")
-
         return current_password
 
     def clean(self):
@@ -111,6 +118,6 @@ class CustomPasswordChangeForm(forms.Form):
         confirm_password = cleaned_data.get('confirm_password')
 
         if new_password and confirm_password and new_password != confirm_password:
-            self.add_error('confirm_password', "The new password and confirm password do not match.")
+            self.add_error('confirm_password', "New passwords do not match.")
 
         return cleaned_data
