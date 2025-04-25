@@ -69,7 +69,7 @@
                     {% else %}
                         <a href="{% url 'bus_detail' bus.bus_id %}" class="block w-full h-full">
                             <div class="p-6 rounded-lg shadow-md border border-gray-300 bg-white hover:bg-blue-600 hover:scale-105 hover:shadow-lg group hover:text-white h-64 flex flex-col justify-between transition">
-                                <h2 class="text-2xl text-blue-900 font-[Alata] group-hover:text-white">BUS {{ bus.bus_id }}</h2>
+                                <h2 class="text-2xl text-blue-900 font-[Alata] group-hover:text-white">{{ bus.bus_plate }}</h2>
                                 <div class="grid grid-cols-2 gap-y-2 mt-2">
                                     <div>
                                         <p class="text-xs font-[Alata] text-blue-400 group-hover:text-white">DRIVER</p>
@@ -81,15 +81,17 @@
                                     </div>
                                 </div>
                                 <hr class="my-2 border-gray-300 group-hover:border-white">
-                                <p class="text-lg font-[Alata] text-center text-gray-900 group-hover:text-white">{{ bus.bus_plate }}</p>
                                 {% with bus_log=bus.buslog_set.last %}
-                                    <p class="text-xs font-[Alata] mt-2 text-blue-400 group-hover:text-white">GOING TO:</p>
                                     {% if bus_log and bus_log.to_station %}
+                                        <p class="text-xs font-[Alata] mt-2 text-blue-400 group-hover:text-white">GOING TO:</p>
                                         <p class="font-[Alata] text-center text-gray-900 group-hover:text-white">{{ bus.next_station }}</p>
                                         <p class="text-xs font-[Alata] mt-2 text-blue-400 group-hover:text-white">ETA:</p>
                                         <p class="font-[Alata] text-center text-gray-900 group-hover:text-white">{{ bus.eta }}</p>
                                     {% else %}
-                                        <p class="font-[Alata] text-center text-gray-900 group-hover:text-white">No assigned destination</p>
+                                        <p class="text-xs font-[Alata] mt-2 text-blue-400 group-hover:text-white">GOING TO:</p>
+                                        <p class="font-[Alata] text-center text-gray-900 group-hover:text-white">No assigned destination yet.</p>
+                                        <p class="text-xs font-[Alata] mt-2 text-blue-400 group-hover:text-white">ETA:</p>
+                                        <p class="font-[Alata] text-center text-gray-900 group-hover:text-white">No estimated time of arrival yet.</p>
                                     {% endif %}
                                 {% endwith %}
                             </div>

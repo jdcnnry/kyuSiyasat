@@ -99,11 +99,10 @@ def change_password(request):
             request.user.set_password(new_password)
             request.user.save()
 
-            # Keep user logged in after password change
             update_session_auth_hash(request, request.user)
 
             messages.success(request, "Password changed successfully.")
-            return redirect('user_management:my_profile')  # Change this as needed
+            return redirect('user_management:my_profile') 
         else:
             messages.error(request, "Please correct the errors below.")
     else:
