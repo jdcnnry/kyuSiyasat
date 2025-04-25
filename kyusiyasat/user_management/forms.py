@@ -23,6 +23,15 @@ class UserRegistrationForm(UserCreationForm):
         self.fields['password2'].help_text = None
         self.fields['password2'].label = "Confirm Password"
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        domain = email.split('@')[-1]
+        
+        allowed_domains = ['gmail.com', 'yahoo.com', 'outlook.com', 'icloud.com', 'mail.com', 'hotmail.com']
+        if domain not in allowed_domains:
+            raise ValidationError("Please use an email address with one of the following domains: %s" % ', '.join(allowed_domains))
+        return email
+
     def save(self, commit=True):
         user = super().save(commit=False)
         user.first_name = self.cleaned_data['first_name']
