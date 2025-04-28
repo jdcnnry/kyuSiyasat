@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 {% load static tailwind_tags %}
-<html lang="en" x-data="{ sidebarOpen: false }" class="h-full bg-slate-100">
-
+<html lang="en" class="h-full bg-slate-100">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,13 +20,15 @@
 </head>
 
 <body class="h-full text-gray-900 font-sans">
+    <div class="flex h-screen overflow-hidden" 
+         x-data="{ sidebarOpen: window.innerWidth >= 768 }"
+         x-init="window.addEventListener('resize', () => { if (window.innerWidth >= 768) sidebarOpen = true })">
 
-<!-- Wrapper -->
-<div class="flex h-screen overflow-hidden" x-data="{ sidebarOpen: false }">
-
+    {% if request.resolver_match.url_name != 'login' %}
     <!-- Desktop Sidebar Toggle Button -->
     <div class="absolute top-4 left-4 hidden md:block z-50">
-        <button @click="sidebarOpen = !sidebarOpen" class="text-gray-800 bg-white p-2 rounded shadow focus:outline-none">
+        <button @click="sidebarOpen = !sidebarOpen" 
+            class="text-gray-800 bg-white p-2 rounded shadow focus:outline-none hover:bg-gray-200 transition">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
                 viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
@@ -36,8 +37,10 @@
     </div>
 
     <!-- Sidebar -->
-    <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" 
-        class="fixed md:relative z-40 inset-y-0 left-0 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out md:block">
+    <aside 
+        class="fixed md:relative z-40 inset-y-0 left-0 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out"
+        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+
         <div class="p-6 space-y-6">
             <h1 class="text-2xl font-bold ml-10">KyuSiyasat</h1>
 
@@ -47,38 +50,44 @@
                     {% if user.is_authenticated %}
                         {% if user.profile.user_type == "driver" %}
                         <li>
-                            <a href="{% url 'driver_dashboard' %}" class="block px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white {% if request.resolver_match.url_name == 'driver_dashboard' %}bg-blue-500 text-white{% endif %}">
+                            <a href="{% url 'driver_dashboard' %}" 
+                                class="block px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white {% if request.resolver_match.url_name == 'driver_dashboard' %}bg-blue-500 text-white{% endif %}">
                                 Dashboard
                             </a>
                         </li>
                         {% elif user.profile.user_type == "commuter" %}
                         <li>
-                            <a href="{% url 'commuter_dashboard' %}" class="block px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white {% if request.resolver_match.url_name == 'commuter_dashboard' %}bg-blue-500 text-white{% endif %}">
+                            <a href="{% url 'commuter_dashboard' %}" 
+                                class="block px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white {% if request.resolver_match.url_name == 'commuter_dashboard' %}bg-blue-500 text-white{% endif %}">
                                 Dashboard
                             </a>
                         </li>
                         {% endif %}
 
                         <li>
-                            <a href="{% url 'user_management:my_profile' %}" class="block px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white {% if request.resolver_match.url_name == 'my_profile' %}bg-blue-500 text-white{% endif %}">
+                            <a href="{% url 'user_management:my_profile' %}" 
+                                class="block px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white {% if request.resolver_match.url_name == 'my_profile' %}bg-blue-500 text-white{% endif %}">
                                 My Profile
                             </a>
                         </li>
 
                         <li>
                             {% if user.profile.user_type == "driver" %}
-                            <a href="{% url 'pages:getting_started_driver' %}" class="block px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white {% if request.resolver_match.url_name == 'getting_started_driver' %}bg-blue-500 text-white{% endif %}">
+                            <a href="{% url 'pages:getting_started_driver' %}" 
+                                class="block px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white {% if request.resolver_match.url_name == 'getting_started_driver' %}bg-blue-500 text-white{% endif %}">
                                 Getting Started
                             </a>
                             {% elif user.profile.user_type == "commuter" %}
-                            <a href="{% url 'pages:getting_started_commuter' %}" class="block px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white {% if request.resolver_match.url_name == 'getting_started_commuter' %}bg-blue-500 text-white{% endif %}">
+                            <a href="{% url 'pages:getting_started_commuter' %}" 
+                                class="block px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white {% if request.resolver_match.url_name == 'getting_started_commuter' %}bg-blue-500 text-white{% endif %}">
                                 Getting Started
                             </a>
                             {% endif %}
                         </li>
 
                         <li>
-                            <a href="{% url 'pages:routes' %}" class="block px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white {% if request.resolver_match.url_name == 'routes' %}bg-blue-500 text-white{% endif %}">
+                            <a href="{% url 'pages:routes' %}" 
+                                class="block px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white {% if request.resolver_match.url_name == 'routes' %}bg-blue-500 text-white{% endif %}">
                                 Routes
                             </a>
                         </li>
@@ -86,7 +95,8 @@
                         <li>
                             <form action="{% url 'logout' %}" method="post" class="mt-4">
                                 {% csrf_token %}
-                                <button type="submit" class="w-full px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white text-left">
+                                <button type="submit" 
+                                    class="w-full px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white text-left">
                                     Logout
                                 </button>
                             </form>
@@ -97,9 +107,10 @@
             {% endif %}
         </div>
 
-        <!-- Sidebar Toggle Button (inside sidebar for mobile view) -->
+        <!-- Sidebar Toggle Button (inside sidebar for mobile) -->
         <div class="absolute top-4 left-4 md:hidden mt-3">
-            <button @click="sidebarOpen = !sidebarOpen" class="text-gray-800 focus:outline-none">
+            <button @click="sidebarOpen = !sidebarOpen" 
+                class="text-gray-800 p-2 rounded shadow focus:outline-none hover:bg-gray-200 transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
                     viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
@@ -108,24 +119,29 @@
         </div>
     </aside>
 
+    {% endif %}
+
     <!-- Content Area -->
     <div class="flex flex-col flex-1 w-0">
+        {% if request.resolver_match.url_name != 'login' %}
         <!-- Header (mobile only) -->
         <div class="flex items-center justify-between p-4 bg-white shadow md:px-6 md:hidden">
-            <button @click="sidebarOpen = !sidebarOpen" class="text-gray-800 focus:outline-none">
+            <button @click="sidebarOpen = !sidebarOpen" 
+                class="text-gray-800 p-2 rounded shadow focus:outline-none hover:bg-gray-200 transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
                     viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
             </button>
         </div>
+        {% endif %}
 
         <!-- Main Content -->
         <main class="flex-1 p-6 overflow-y-auto">
             {% block content %}{% endblock %}
         </main>
     </div>
-</div>
 
+</div>
 </body>
 </html>
