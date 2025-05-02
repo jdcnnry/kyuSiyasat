@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="flex justify-center items-center min-h-screen bg-gray-100">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg"> 
-        <!-- Increased max-w-lg for wider form -->
+<div class="fixed inset-0 flex justify-center items-center bg-[url('/static/images/login-bg.jpg')] bg-cover bg-center bg-no-repeat">
+    <div class="bg-white bg-opacity-80 p-8 rounded-lg shadow-lg w-full max-w-lg max-h-[800px]">
         <h2 class="text-xl font-semibold text-gray-900 text-center mb-4">Register to KyuSiyasat!</h2>
 
         <form method="post" class="space-y-4">
@@ -29,9 +28,9 @@
 
 <style>
     input, select {
-        width: 100%; /* Ensures full width */
+        width: 100%; 
         padding: 10px;
-        border: 1px solid #d1d5db; /* Light gray border */
+        border: 1px solid #d1d5db;
         border-radius: 5px;
         font-size: 14px;
     }
