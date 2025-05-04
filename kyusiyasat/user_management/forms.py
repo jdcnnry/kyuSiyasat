@@ -29,7 +29,7 @@ class UserRegistrationForm(UserCreationForm):
         
         allowed_domains = ['gmail.com', 'yahoo.com', 'outlook.com', 'icloud.com', 'mail.com', 'hotmail.com']
         if domain not in allowed_domains:
-            raise ValidationError("Please use an email address with one of the following domains: %s" % ', '.join(allowed_domains))
+            raise ValidationError("Please use an email address with one of the following domains: @%s" % ', @'.join(allowed_domains))
         return email
 
     def save(self, commit=True):
@@ -76,6 +76,15 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image','first_name', 'last_name', 'email', 'user_type']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        domain = email.split('@')[-1]
+        
+        allowed_domains = ['gmail.com', 'yahoo.com', 'outlook.com', 'icloud.com', 'mail.com', 'hotmail.com']
+        if domain not in allowed_domains:
+            raise ValidationError("Please use an email address with one of the following domains: @%s" % ', @'.join(allowed_domains))
+        return email
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
