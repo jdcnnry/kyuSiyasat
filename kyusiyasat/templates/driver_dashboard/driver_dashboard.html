@@ -10,15 +10,11 @@
                 <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded text-sm font-[Alata] fade-message">
                     {{ message }}
                 </div>
-            {% elif "error" in message.tags %}
-                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 rounded text-sm font-[Alata]">
-                    {{ message }}
-                </div>
             {% endif %}
+            {# Do NOT display error messages here #}
         {% endfor %}
     </div>
-{% endif %}
-
+    {% endif %}
 
     <div class="mb-6 p-6 bg-white shadow-lg rounded-lg font-[Alata]">
         <h2 class="text-2xl font-bold">Driver Dashboard</h2>
