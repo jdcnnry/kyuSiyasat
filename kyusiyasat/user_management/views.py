@@ -82,9 +82,6 @@ def update_profile(request):
             form.save()
             messages.success(request, "Your profile has been updated successfully!")
             return redirect('user_management:my_profile')
-          
-        else:
-            messages.error(request, "Error updating profile. Please check the form.")
     else:
         form = ProfileUpdateForm(instance=profile)
 
@@ -103,8 +100,6 @@ def change_password(request):
 
             messages.success(request, "Password changed successfully.")
             return redirect('user_management:my_profile') 
-        else:
-            messages.error(request, "Please correct the errors below.")
     else:
         form = CustomPasswordChangeForm(user=request.user)
 
