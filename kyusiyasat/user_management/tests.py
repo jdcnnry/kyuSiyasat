@@ -43,7 +43,7 @@ class UpdateProfileTest(TestCase):
     def setUp(self):
         # Set up data for the whole TestCase
         User = get_user_model()
-        self.user = User.objects.create_user(username='testuser', password='testpassword', first_name='OldFirst', last_name='OldLast', email='old@example.com')
+        self.user = User.objects.create_user(username='testuser', password='testpassword', first_name='OldFirst', last_name='OldLast', email='old@gmail.com')
         self.profile = Profile.objects.create(user=self.user, user_type='commuter')
         self.client.login(username='testuser', password='testpassword')
 
@@ -53,7 +53,7 @@ class UpdateProfileTest(TestCase):
         data = {
             'first_name': 'NewFirst',
             'last_name': 'NewLast',
-            'email': 'new@example.com',
+            'email': 'new@gmail.com',
         }
         response = self.client.post(url, data, follow=True)
         
@@ -62,7 +62,7 @@ class UpdateProfileTest(TestCase):
         
         self.assertEqual(self.user.first_name, 'NewFirst')
         self.assertEqual(self.user.last_name, 'NewLast')
-        self.assertEqual(self.user.email, 'new@example.com')
+        self.assertEqual(self.user.email, 'new@gmail.com')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'my_profile.html')
 
@@ -102,7 +102,7 @@ class UserRegistrationTest(TestCase):
             'username': 'driver_user',  # Duplicate username
             'first_name': 'Test',
             'last_name': 'User',
-            'email': 'testuser2@example.com',
+            'email': 'testuser2@gmail.com',
             'password1': 'StrongPass123!',
             'password2': 'StrongPass123!',
             'user_type': 'driver',
@@ -122,7 +122,7 @@ class UserRegistrationTest(TestCase):
             'username': 'testuser',
             'first_name': 'Test',
             'last_name': 'User',
-            'email': 'testuser@example.com',
+            'email': 'testuser@gmail.com',
             'password1': 'StrongPass123!',
             'password2': 'StrongPass123!',
             'user_type': 'driver',
@@ -136,7 +136,7 @@ class UserRegistrationTest(TestCase):
             'username': 'testuser',
             'first_name': 'Test',
             'last_name': 'User',
-            'email': 'testuser@example.com',
+            'email': 'testuser@gmail.com',
             'password1': 'StrongPass123!',
             'password2': 'WrongPass123!',
             'user_type': 'driver',
@@ -150,7 +150,7 @@ class UserRegistrationTest(TestCase):
             'username': 'testuser',
             'first_name': 'Test',
             'last_name': 'User',
-            'email': 'testuser@example.com',
+            'email': 'testuser@gmail.com',
             'password1': 'StrongPass123!',
             'password2': 'StrongPass123!',
             'user_type': 'driver',
@@ -165,7 +165,7 @@ class UserRegistrationTest(TestCase):
             'username': 'driveruser',
             'first_name': 'Driver',
             'last_name': 'User',
-            'email': 'driver@example.com',
+            'email': 'driver@gmail.com',
             'password1': 'Testpassword123!',
             'password2': 'Testpassword123!',
             'user_type': 'driver',
@@ -188,7 +188,7 @@ class UserRegistrationTest(TestCase):
             'username': 'commuteruser',
             'first_name': 'Commuter',
             'last_name': 'User',
-            'email': 'commuter@example.com',
+            'email': 'commuter@gmail.com',
             'password1': 'Testpassword123!',
             'password2': 'Testpassword123!',
             'user_type': 'commuter',
